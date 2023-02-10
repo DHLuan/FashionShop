@@ -28,6 +28,29 @@
             </div>
         </div>
     </div>
+
+    <div class="py-5">
+        <div class="container">
+            <div class="row">
+                <h2>Trending Category</h2>
+                <div class="owl-carousel featured-carousel owl-theme">
+                    @foreach($trending_category as $category)
+                        <div class="item">
+                            <div class="card">
+                                <img src="{{ asset('assets/uploads/category/'.$category->image) }}" alt="Product image" style="height: 350px">
+                                <div class="card-body">
+                                    <h5>{{ $category->name }}</h5>
+                                    <p>
+                                        {{$category->description}}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('scripts')

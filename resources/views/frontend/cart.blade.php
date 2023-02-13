@@ -20,7 +20,7 @@
     </div>
 
     <div class="container my-5">
-        <div class="card shadow product-data">
+        <div class="card shadow product_data">
             <div class="card-body">
                 @foreach($cartitems as $item)
                     <div class="row product_data">
@@ -40,93 +40,11 @@
                             </div>
                         </div>
                         <div class="col-md-2">
-                            <button class="btn btn-danger delete-cart-item"> <i class="fa fa-trash"></i>Delete</button>
+                            <button class="btn btn-danger delete-cart-item">   <i class="material-icons">remove_shopping_cart</i> Delete</button>
                         </div>
                     </div>
                 @endforeach
             </div>
         </div>
     </div>
-@endsection
-
-@section('scripts')
-    <script>
-        $(document).ready(function () {
-
-            $('.addToCartBtn').click(function (e) {
-                e.preventDefault();
-
-                var product_id = $(this).closest('.product_data').find('.prod_id').val();
-                var product_qty = $(this).closest('.product_data').find('.qty-input').val();
-
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-
-                $.ajax({
-                    method: "POST",
-                    url: "/add-to-cart",
-                    data: {
-                        'product_id': product_id,
-                        'product_qty': product_qty,
-                    },
-                    success: function (response) {
-                        swal(response.status);
-                    }
-                })
-            });
-
-            $('.increment-btn').click(function (e) {
-                e.preventDefault();
-
-                var inc_value = $(this).closest('.product-data').find('.qty-input').val();
-                var value = parseInt(inc_value, 10);
-                value = isNaN(value) ? 0 : value;
-                if(value < 10)
-                {
-                    value ++;
-                    $(this).closest('.product-data').find('.qty-input').val(value);
-                }
-            });
-
-            $('.decrement-btn').click(function (e) {
-                e.preventDefault();
-
-                var dec_value = $(this).closest('.product-data').find('.qty-input').val();
-                var value = parseInt(dec_value, 10);
-                value = isNaN(value) ? 0 : value;
-                if(value > 1)
-                {
-                    value --;
-                    $(this).closest('.product-data').find('.qty-input').val(value);
-                }
-            });
-
-            $('.delete-cart-item').click(function (e) {
-                e.preventDefault();
-
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-
-                var prod_id = $(this).closest('.product-data').find('.prod_id').val();
-
-                $.ajax({
-                    method: "POST",
-                    url: "delete-cart-item",
-                    data: {
-                        'prod_id': prod_id,
-                    },
-                    success: function (response) {
-                        window.location.reload();
-                        swal("",response.status,"success");
-                    }
-                });
-            });
-        });
-    </script>
 @endsection

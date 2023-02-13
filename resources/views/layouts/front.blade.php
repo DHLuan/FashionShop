@@ -38,21 +38,22 @@
 </head>
 <body>
 
-        @include('layouts.inc.frontnavbar')
-        <div class="content">
-            @yield('content')
-        </div>
-
-    <!-- Scripts -->
-    <script src="{{ asset('frontend/js/jquery-3.6.3.min.js') }}" ></script>
-    <script src="{{ asset('frontend/js/bootstrap.bundle.min.js') }}" ></script>
-    <script src="{{ asset('frontend/js/owl.carousel.min.js') }}" ></script>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    @if(session('status'))
-        <script>
-            swal("{{session('status')}}");
-        </script>
-    @endif
-    @yield('scripts')
+@include('layouts.inc.frontnavbar')
+<div class="content">
+    @yield('content')
+</div>
+s
+<!-- Scripts -->
+<script src="{{ asset('frontend/js/jquery-3.6.3.min.js') }}" ></script>
+<script src="{{ asset('frontend/js/bootstrap.bundle.min.js') }}" ></script>
+<script src="{{ asset('frontend/js/owl.carousel.min.js') }}" ></script>
+<script src="{{ asset('frontend/js/custom.js') }}" ></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+@if(session('status'))
+    <script>
+        swal("{{session('status')}}");
+    </script>
+@endif
+@yield('scripts')
 </body>
 </html>

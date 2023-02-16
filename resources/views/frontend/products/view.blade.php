@@ -51,16 +51,18 @@
                         <div class="row mt-2">
                             <div class="col-md-3">
                                 <input type="hidden" value="{{ $products->id }}" class="prod_id">
-                                <label for="Quantity">Quantity</label>
-                                <div class="input-group text-center mb-3">
-                                    <button class="input-group-text decrement-btn">-</button>
-                                    <input type="text" name="quantity " value="1" class="form-control qty-input text-center"/>
-                                    <button class="input-group-text increment-btn">+</button>
-                                </div>
+                                    <label for="Quantity">Quantity</label>
+                                    <div class="input-group text-center mb-3">
+                                        <button class="input-group-text decrement-btn">-</button>
+                                        <input type="text" name="quantity " value="1" class="form-control qty-input text-center"/>
+                                        <button class="input-group-text increment-btn">+</button>
+                                    </div>
                             </div>
                             <div class="col-md-10">
                                 <br/>
-                                <button type="button" class="btn btn-primary me-3 addToCartBtn float-start">Add to Cart <i class="material-icons">add_shopping_cart</i> </button>
+                                @if($products->qty >0)
+                                    <button type="button" class="btn btn-primary me-3 addToCartBtn float-start">Add to Cart <i class="material-icons">add_shopping_cart</i> </button>
+                                @endif
                                 <button type="button" class="btn btn-success me-3 float-start">Add to Wishlist <i class="material-icons">favorite</i> </button>
                             </div>
                         </div>

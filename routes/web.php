@@ -8,6 +8,7 @@ use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\UserController;
 use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -64,12 +65,13 @@ Route::middleware(['auth','isAdmin'])-> group(function () {
     Route::put('update-products/{id}', [ProductController::class, 'update']);
     Route::get('delete-products/{id}', [ProductController::class, 'delete']);
 
-    Route::get('users', [FrontendController::class, 'users']);
-
     Route::get('orders', [OrderController::class, 'index']);
     Route::get('admin/view-order/{id}', [OrderController::class, 'view']);
     Route::put('update-order/{id}', [OrderController::class, 'updateorder' ]);
     Route::get('order-history', [OrderController::class, 'orderhistory']);
+
+    Route::get('view-user/{id}', [DashboardController::class, 'viewuser']);
+    Route::get('users', [DashboardController::class, 'users']);
 });
 
 

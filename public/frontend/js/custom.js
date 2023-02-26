@@ -1,5 +1,8 @@
 $(document).ready(function () {
 
+    loadcart();
+    loadwishlist();
+
     $('.addToCartBtn').click(function (e) {
         e.preventDefault();
 
@@ -21,6 +24,7 @@ $(document).ready(function () {
             },
             success: function (response) {
                 swal(response.status);
+                loadcart();
             }
         })
     });
@@ -70,8 +74,8 @@ $(document).ready(function () {
                 'prod_id': prod_id,
             },
             success: function (response) {
-                swal("",response.status,"success");
                 window.location.reload();
+                loadcart();
             }
         });
     });
@@ -88,9 +92,34 @@ $(document).ready(function () {
             },
             success: function (response) {
                 swal(response.status);
+                loadwishlist();
             }
         });
     });
+
+    function loadcart()
+    {
+        $.ajax({
+           method: "GET",
+           url: "/load-cart-data",
+           success: function (response) {
+               $('.cart-count').html('');
+               $('.cart-count').html(response.count);
+           }
+        });
+    }
+
+    function loadwishlist()
+    {
+        $.ajax({
+            method: "GET",
+            url: "/load-wishlist-count",
+            success: function (response) {
+                $('.wishlist-count').html('');
+                $('.wishlist-count').html(response.count);
+            }
+        });
+    }
 
     $('.remove-wishlist-item').click(function (e) {
         e.preventDefault();
@@ -105,6 +134,7 @@ $(document).ready(function () {
             success: function (response) {
                 swal("",response.status,"success");
                 window.location.reload();
+                loadwishlist();
             }
         });
     })

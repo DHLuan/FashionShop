@@ -63,7 +63,7 @@
                                 @if($products->qty >0)
                                     <button type="button" class="btn btn-primary me-3 addToCartBtn float-start">Add to Cart <i class="material-icons">add_shopping_cart</i> </button>
                                 @endif
-                                <button type="button" class="btn btn-success me-3 float-start">Add to Wishlist <i class="material-icons">favorite</i> </button>
+                                <button type="button" class="btn btn-success me-3 addToWishlist float-start">Add to Wishlist <i class="material-icons">favorite</i> </button>
                             </div>
                         </div>
                     </div>

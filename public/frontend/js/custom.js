@@ -76,6 +76,39 @@ $(document).ready(function () {
         });
     });
 
+    $('.addToWishlist').click(function (e) {
+        e.preventDefault();
+        var product_id = $(this).closest('.product_data').find('.prod_id').val();
+
+        $.ajax({
+            method: "POST",
+            url: "/add-to-wishlist",
+            data: {
+                'product_id' : product_id,
+            },
+            success: function (response) {
+                swal(response.status);
+            }
+        });
+    });
+
+    $('.remove-wishlist-item').click(function (e) {
+        e.preventDefault();
+
+        var prod_id = $(this).closest('.product_data').find('.prod_id').val();
+        $.ajax({
+            method: "POST",
+            url: "delete-wishlist-item",
+            data: {
+                'prod_id': prod_id,
+            },
+            success: function (response) {
+                swal("",response.status,"success");
+                window.location.reload();
+            }
+        });
+    })
+
     $('.changeQuantity').click(function (e) {
         e.preventDefault();
 

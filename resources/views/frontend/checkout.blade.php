@@ -100,6 +100,7 @@
                             <input type="hidden" name="payment_mode" value="COD">
                                 <button type="submit" class="btn btn-success w-100">Place Order | COD</button>
                                 <button type="button" class="btn btn-primary w-100 mt-3 zalopay_btn">Pay with Razorpay</button>
+                                <div id="paypal-button-container" class="mt-3"></div>
                             @else
                                 <h4 class="text-center">No products in cart</h4>
                             @endif
@@ -112,5 +113,59 @@
 @endsection
 
 @section('scripts')
+    <script src="https://www.paypal.com/sdk/js?client-id=Ac7CsOudM6G-ECxM40Ass9tNOIZn-W8kUxrwiTuhsHeIazgaJFBuz_5G8ZnO6-NNPQzXOIyZe9Q8FNtH"></script>
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script>
+        paypal.Buttons({
+            // Order is created on the server and the order id is returned
+            createOrder: function(data, actions) {
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            value: '{{ $total }}'
+                        }
+                    }]
+                });
+            },
+            onApprove: function (data, actions) {
+                return actions.order.capture().then(function (details) {
+                    // alert('Transsaction completed by' + details.payer.name.given_name);
+
+                    var firstname = $('.firstname').val();
+                    var lastname = $('.lastname').val();
+                    var email = $('.email').val();
+                    var phone = $('.phone').val();
+                    var address1 = $('.address1').val();
+                    var address2 = $('.address2').val();
+                    var city = $('.city').val();
+                    var state = $('.state').val();
+                    var country = $('.country').val();
+                    var pincode = $('.pincode').val();
+
+                    $.ajax({
+                        method: "POST",
+                        url: "/place-order",
+                        data: {
+                            'fname':firstname,
+                            'lname':lastname,
+                            'email':email,
+                            'phone':phone,
+                            'address1':address1,
+                            'address2':address2,
+                            'city':city,
+                            'state':state,
+                            'country':country,
+                            'pincode':pincode,
+                            'payment_mode':"Paid by Paypal",
+                            'payment_id': details.id,
+                        },
+                        success: function (response) {
+                            swal(response.status);
+                            window.location.href = "/my-orders";
+                        }
+                    })
+                });
+            }
+        }).render('#paypal-button-container');
+    </script>
 @endsection

@@ -156,7 +156,7 @@ $(document).ready(function () {
                         // "order_id": "order_9A33XWu170gUtm", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
                         "callback_url": "https://eneqd3r9zrjok.x.pipedream.net/",
                         "handler":function (response) {
-                            alert(responsea.razorpay_payment_id);
+                            // alert(responsea.razorpay_payment_id);
                             $.ajax({
                                 method: "POST",
                                 url: "/place-order",
@@ -179,7 +179,7 @@ $(document).ready(function () {
                                     swal(responseb.status);
                                     window.location.href = "/";
                                 }
-                            })
+                            });
                         },
                         "prefill": {
                             "name": response.firstname+' '+response.lastname, //your customer's name

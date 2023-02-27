@@ -86,10 +86,10 @@
                         @php $ratenum = number_format($rating_value) @endphp
                         <div class="rating">
                             @for($i =1; $i<= $ratenum; $i++)
-                                <i class="material-icons checked">add_shopping_cart</i>
+                                <i class="material-icons checked">star</i>
                             @endfor
                             @for($j = $ratenum+1; $j <=5; $j++)
-                                    <i class="material-icons">add_shopping_cart</i>
+                                    <i class="material-icons">star</i>
                             @endfor
                             <span>
                                 @if($ratings->count() > 0)
@@ -127,19 +127,53 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-12">
+                    <div class="col-md-12">
+                        <hr>
+                        <h3>Description</h3>
+                        <p class="mt-3">
+                            {!! $products->description !!}
+                        </p>
+                    </div>
                     <hr>
-                    <h3>Description</h3>
-                    <p class="mt-3">
-                        {!! $products->description !!}
-                    </p>
                 </div>
-                <hr>
-                <div class="col-md-12">
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                        Rate this product
-                    </button>
+                <div class="row">
+                    <div class="col-md-4">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            Rate this product
+                        </button>
+                        <a href="{{ url('add-review/'.$products->slug.'/userreview') }}" class="btn btn-primary" >
+                            Write a review
+                        </a>
+                    </div>
+                    <div class="col-md-8">
+                        @foreach($reviews as $item)
+                            <div class="user-review">
+                                <label for="">{{ $item->user->name .' '.$item->user->lname }}</label>
+                                @if($item->user_id == Auth::id())
+                                    <a href="{{ url('edit-review/'.$products->slug.'/userreview') }}">edit</a>
+                                @endif
+                                <br>
+                                @php
+
+                                    $rating = App\Models\Rating::where('prod_id',$products->id)->where('user_id',$item->user->id)->first();
+
+                                @endphp
+                                @if($rating)
+                                    @php $user_rated = $rating->stars_rated @endphp
+                                    @for($i =1; $i<= $user_rated; $i++)
+                                        <i class="material-icons checked">star</i>
+                                    @endfor
+                                    @for($j = $user_rated+1; $j <=5; $j++)
+                                        <i class="material-icons">star</i>
+                                    @endfor
+                                @endif
+                                <small>Reviewed on {{ $item->created_at->format('d M Y') }}</small>
+                                <p>
+                                    {{ $item->user_review }}
+                                </p>
+                            </div>
+                        @endforeach
+                    </div>
                 </div>
             </div>
         </div>

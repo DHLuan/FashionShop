@@ -18,6 +18,15 @@
     font-weight: 700;
 }
 
+.search-bar{
+    width: 40%;
+    margin-left: 10%;
+}
+
+.ui-menu{
+    z-index: 3500 !important;
+}
+
 .order-details div{
     font-size: 14px;
     padding: 5px !important;

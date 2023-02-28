@@ -23,6 +23,7 @@
     <link href="{{ asset('frontend/css/owl.theme.default.min.css') }}" rel="stylesheet">
 
     <link href="{{ asset('frontend/css/fontawesome.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
 
     <!-- Font awesome -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -50,6 +51,27 @@ s
 <script src="{{ asset('frontend/js/owl.carousel.min.js') }}" ></script>
 <script src="{{ asset('frontend/js/checkout.js') }}" ></script>
 
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+<script>
+
+        var availableTags = [];
+        $.ajax({
+            method: "GET",
+            url: "/product-list",
+            success: function (response) {
+                startAutoComplete(response);
+            }
+        });
+
+        function startAutoComplete(availableTags)
+        {
+            $( "#search_product" ).autocomplete({
+                source: availableTags
+            });
+        }
+
+
+</script>
 
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 @if(session('status'))

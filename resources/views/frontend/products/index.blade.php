@@ -12,6 +12,24 @@
         </div>
     </div>
 
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <label for="amount">Sort By</label>
+                <form>
+                    @csrf
+                    <select name="sort" id="sort" class="form-control">
+                        <option value="{{}}">--sort--</option>
+                        <option value="">--sort by max price</option>
+                        <option value="">--sort by min price</option>
+                        <option value="">--sort by A to Z</option>
+                        <option value="">--sort by Z to A</option>
+                    </select>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <div class="py-5">
         <div class="container">
             <div class="row">

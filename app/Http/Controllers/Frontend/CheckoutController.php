@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
+use App\Models\Category;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
@@ -15,6 +16,7 @@ class CheckoutController extends Controller
 {
     public function index()
     {
+        $categories = Category::where('status','0')->get();
         $old_cartitems = Cart::where('user_id', Auth::id())->get();
         foreach ($old_cartitems as $item)
         {
@@ -26,7 +28,7 @@ class CheckoutController extends Controller
         }
         $cartitems = Cart::where('user_id', Auth::id())->get();
 
-        return view('frontend.checkout', compact('cartitems'));
+        return view('frontend.checkout', compact('cartitems','categories'));
     }
 
     public function placeOrder(Request $request)
@@ -43,6 +45,7 @@ class CheckoutController extends Controller
         $order->state = $request->input('state');
         $order->country = $request->input('country');
         $order->pincode = $request->input('pincode');
+        $order->message = $request->input('message');
 
         $order->payment_mode = $request->input('payment_mode');
         $order->payment_id = $request->input('payment_id');

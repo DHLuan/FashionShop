@@ -37,6 +37,8 @@
                                 </div>
                                 <label for="">Zip Code</label>
                                 <div class="border ">{{ $orders->pincode }}</div>
+                                <label for="">Message</label>
+                                <div class="border ">{{ $orders->message }}</div>
                             </div>
                             <div class="col-md-6">
                                 <h4>Order Details</h4>

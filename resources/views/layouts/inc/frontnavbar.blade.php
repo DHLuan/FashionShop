@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container">
+    <div class="container" style="color: white; !important;">
         <a class="navbar-brand" href="{{ url('/') }}">Fashion Shop</a>
         <div class="search-bar">
             <form action="{{ url('searchproduct') }}" method="POST">

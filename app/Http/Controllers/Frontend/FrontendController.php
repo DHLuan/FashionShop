@@ -14,28 +14,47 @@ class FrontendController extends Controller
 {
     public function index()
     {
+        $categories = Category::where('status','0')->get();
         $featured_products = Product::where('trending','1')->take(15)->get();
         $trending_category = Category::where('popular','1')->take(15)->get();
-        return view('frontend.index', compact('featured_products', 'trending_category'));
+        return view('frontend.index', compact('featured_products', 'trending_category', 'categories'));
+    }
+
+
+    public function shop()
+    {
+        $products = Product::all();
+        $categories = Category::where('status','0')->get();
+
+        return view('frontend.products.shop', compact('products','categories'));
     }
 
     public function category()
     {
-        $category = Category::where('status','0')->get();
-        return view('frontend.category', compact('category'));
+        $categories = Category::where('status','0')->get();
+        $category = Category::where('parent_id',NULL)->get();
+        return view('frontend.category', compact( 'category','categories'));
     }
 
     public function viewcategory($slug)
     {
-        if(Category::where('slug',$slug)->exists())
+        $category = Category::where('slug', $slug)->first();
+        $categories = Category::where('status','0')->get();
+        if($category->children->count() > 0)
         {
-            $category = Category::where('slug', $slug)->first();
-            $products = Product::where('cate_id', $category->id)->where('status','0')->get();
-            return view('frontend.products.index', compact('category', 'products'));
+            return view('frontend.category1',compact('category','categories'));
         }
-        else
-        {
-            return redirect('/')->with('status',"Slug doesn't exists");
+        else{
+            if(Category::where('slug',$slug)->exists())
+            {
+
+                $products = Product::where('cate_id', $category->id)->where('status','0')->get();
+                return view('frontend.products.index', compact('category', 'products', 'category','categories'));
+            }
+            else
+            {
+                return redirect('/')->with('status',"Slug doesn't exists");
+            }
         }
     }
 
@@ -45,6 +64,7 @@ class FrontendController extends Controller
         {
             if(Product::where('slug', $prod_slug)->exists())
             {
+                $categories = Category::where('status','0')->get();
                 $products = Product::where('slug', $prod_slug)->first();
                 $ratings = Rating::where('prod_id', $products->id)->get();
                 $rating_sum = Rating::where('prod_id', $products->id)->sum('stars_rated');
@@ -58,7 +78,7 @@ class FrontendController extends Controller
                 else{
                     $rating_value = 0;
                 }
-                return view('frontend.products.view', compact('products','ratings','reviews','rating_value','user_rating'));
+                return view('frontend.products.view', compact('products','ratings','reviews','rating_value','user_rating','categories'));
             }
             else
             {

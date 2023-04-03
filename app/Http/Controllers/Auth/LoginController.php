@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
+use function Sodium\compare;
 
 class LoginController extends Controller
 {
@@ -30,6 +32,7 @@ class LoginController extends Controller
 //    protected $redirectTo = RouteServiceProvider::HOME;
     protected function authenticated()
     {
+
         if(Auth::user()->role_as == '1') //1 = Admin Login
         {
             return redirect('dashboard')->with('status','Welcome to your dashboard');

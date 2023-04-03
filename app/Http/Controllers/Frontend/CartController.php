@@ -4,6 +4,7 @@ namespace App\Http\Controllers\frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
+use App\Models\Category;
 use App\Models\Product;
 use http\Env\Response;
 use Illuminate\Http\Request;
@@ -46,8 +47,9 @@ class CartController extends Controller
 
     public function viewcart()
     {
+        $categories = Category::where('status','0')->get();
         $cartitems = Cart::where('user_id', Auth::id())->get();
-        return view('frontend.cart', compact('cartitems'));
+        return view('frontend.cart', compact('cartitems', 'categories'));
     }
 
     public function updateCart(Request $request)

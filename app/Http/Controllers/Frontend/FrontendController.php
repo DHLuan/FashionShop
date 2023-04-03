@@ -24,7 +24,7 @@ class FrontendController extends Controller
     public function shop()
     {
         $products = Product::all();
-        $categories = Category::where('status','0')->get ();
+        $categories = Category::where('status','0')->get();
 
         return view('frontend.products.shop', compact('products','categories'));
     }

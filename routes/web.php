@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Frontend\WishlistController;
 use App\Http\Controllers\Frontend\RatingController;
 use App\Http\Controllers\Frontend\ReviewController;
+use App\Http\Controllers\Admin\CouponController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,6 +49,7 @@ Route::get('load-cart-data', [CartController::class, 'cartcount']);
 Route::post('add-to-wishlist', [WishlistController::class, 'add']);
 Route::post('delete-wishlist-item', [WishlistController::class, 'deleteitem']);
 Route::get('load-wishlist-count', [   WishlistController::class, 'wishlistcount']);
+Route::post('apply-coupon', [CartController::class, 'applyCoupon']);
 
 Route::middleware(['auth'])->group(function (){
     Route::get('cart', [CartController::class, 'viewcart']);
@@ -86,6 +88,13 @@ Route::middleware(['auth','isAdmin'])-> group(function () {
     Route::get('edit-products/{id}', [ProductController::class, 'edit']);
     Route::put('update-products/{id}', [ProductController::class, 'update']);
     Route::get('delete-products/{id}', [ProductController::class, 'delete']);
+
+    Route::get('coupons', [CouponController::class, 'index']);
+    Route::get('add-coupons',[CouponController::class, 'add']);
+    Route::post('insert-coupons',[CouponController::class, 'insert']);
+    Route::get('edit-coupons/{id}', [CouponController::class, 'edit']);
+    Route::put('update-coupons/{id}', [CouponController::class, 'update']);
+    Route::get('delete-coupons/{id}', [CouponController::class, 'delete']);
 
     Route::get('orders', [OrderController::class, 'index']);
     Route::get('admin/view-order/{id}', [OrderController::class, 'view']);

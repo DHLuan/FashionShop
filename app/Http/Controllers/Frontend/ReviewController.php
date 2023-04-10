@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\Review;
@@ -14,6 +15,7 @@ class ReviewController extends Controller
     public function add($product_slug)
     {
         $product = Product::where('slug', $product_slug)->where('status','0')->first();
+        $categories = Category::whereNull('parent_id')->with('children')->get();
 
         if($product)
         {
@@ -21,14 +23,14 @@ class ReviewController extends Controller
             $review = Review::where('user_id', Auth::id())->where('prod_id', $product_id)->first();
             if ($review)
             {
-                return view('frontend.reviews.edit', compact('review'));
+                return view('frontend.reviews.edit', compact('review','categories'));
             }
             else
             {
                 $verified_purchase = Order::where('orders.user_id', Auth::id())
                     ->join('order_items','orders.id','order_items.order_id')
                     ->where('order_items.prod_id', $product_id)->get();
-                return view('frontend.reviews.index', compact('product','verified_purchase'));
+                return view('frontend.reviews.index', compact('product','verified_purchase','categories'));
             }
         }
         else
@@ -65,13 +67,14 @@ class ReviewController extends Controller
     public function edit($product_slug)
     {
         $product = Product::where('slug', $product_slug)->where('status', '0')->first();
+        $categories = Category::where('popular','0')->get();
         if($product)
         {
             $product_id = $product->id;
             $review = Review::where('user_id', Auth::id())->where('prod_id', $product_id)->first();
             if ($review)
             {
-                return view('frontend.reviews.edit', compact('review'));
+                return view('frontend.reviews.edit', compact('review','categories'));
             }
             else
             {

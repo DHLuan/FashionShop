@@ -47,7 +47,7 @@ class CartController extends Controller
 
     public function viewcart()
     {
-        $categories = Category::where('status','0')->get();
+        $categories = Category::whereNull('parent_id')->with('children')->get();
         $cartitems = Cart::where('user_id', Auth::id())->get();
         return view('frontend.cart', compact('cartitems', 'categories'));
     }
@@ -91,5 +91,66 @@ class CartController extends Controller
     {
         $cartcount = Cart::where('user_id', Auth::id())->count();
         return response()->json(['count'=> $cartcount]);
+    }
+
+    public function applyCoupon(Request $request)
+    {
+        $code = $request->input('code');
+        $coupon = Coupon::where('code', $code)->where('status', 1)
+            ->where(function ($query) {
+                $query->whereNull('start_date')
+                    ->orWhere('start_date', '<=', Carbon::now());
+            })
+            ->where(function ($query) {
+                $query->whereNull('end_date')
+                    ->orWhere('end_date', '>=', Carbon::now());
+            })
+            ->first();
+
+        if (!$coupon) {
+            return response()->json(['status' => 'Coupon is invalid or expired'], 404);
+        }
+
+        $cart_value = $this->getCartValue();
+
+        if ($cart_value < $coupon->cart_value) {
+            return response()->json(['status' => 'Coupon is invalid'], 404);
+        }
+
+        $discount = 0;
+
+        if ($coupon->type == 'fixed') {
+            $discount = $coupon->value;
+        } else {
+            $discount = $cart_value * ($coupon->value / 100);
+        }
+
+        $cartitems = Cart::where('user_id', Auth::id())->get();
+
+        foreach ($cartitems as $cartitem) {
+            $product = Product::find($cartitem->prod_id);
+
+            if ($product) {
+                $subtotal = $product->price * $cartitem->prod_qty;
+
+                if ($subtotal >= $discount) {
+                    $cartitem->discount = $discount;
+                    $cartitem->coupon_code = $coupon->code;
+                    $cartitem->update();
+
+                    $coupon->qty = $coupon->qty - 1;
+                    $coupon->update();
+
+                    return response()->json(['status' => 'Coupon applied successfully'], 200);
+                } else {
+                    $discount -= $subtotal;
+                    $cartitem->discount = $subtotal;
+                    $cartitem->coupon_code = $coupon->code;
+                    $cartitem->update();
+                }
+            }
+        }
+
+        return response()->json(['status' => 'Coupon applied successfully'], 200);
     }
 }

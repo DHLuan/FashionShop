@@ -20,7 +20,7 @@
                     </div>
                     <div class="col-md-12 mb-3">
                         <label for="">Description</label>
-                        <textarea name="description" rows="3" class="form-control">{{$category->description}}</textarea>
+                        <textarea name="description" rows="3" class="form-control ckeditor">{{$category->description}}</textarea>
                     </div>
                     <div class="col-md-6 mb-3">
                         <label for="">Status</label>
@@ -36,11 +36,11 @@
                     </div>
                     <div class="col-md-12 mb-3">
                         <label for="">Meta Keywords</label>
-                        <textarea name="meta_keywords" rows="3" class="form-control">{{$category->meta_keywords}}</textarea>
+                        <textarea name="meta_keywords" rows="3" class="form-control ckeditor">{{$category->meta_keywords}}</textarea>
                     </div>
                     <div class="col-md-12 mb-3">
                         <label for="">Meta Description</label>
-                        <textarea name="meta_description" rows="3" class="form-control">{{$category->meta_descrip}}</textarea>
+                        <textarea name="meta_description" rows="3" class="form-control ckeditor">{{$category->meta_descrip}}</textarea>
                     </div>
                     @if($category->image)
                         <img src="{{asset('assets/uploads/category/'. $category->image) }}" alt="Category image">
@@ -55,5 +55,11 @@
             </form>
         </div>
     </div>
+    <script src="//cdn.ckeditor.com/4.21.0/standard/ckeditor.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.ckeditor').ckeditor();
+        });
+    </script>
 @endsection
 

@@ -41,7 +41,7 @@
             </li>
             <li class="nav-item  {{ Request::is('orders') ? 'active':'' }} ">
                 <a class="nav-link" href="{{ url('orders')}}">
-                    <i class="material-icons">location_ons</i>
+                    <i class="material-icons">local_shipping</i>
                     <p>Orders</p>
                 </a>
             </li>
@@ -51,16 +51,22 @@
                     <p>Users</p>
                 </a>
             </li>
-            <li class="nav-item ">
-                <a class="nav-link" href="./rtl.html">
+            <li class="nav-item " {{ Request::is('coupons') ? 'active':'' }}>
+                <a class="nav-link" href="{{ url('coupons')}}">
                     <i class="material-icons">language</i>
-                    <p>RTL Support</p>
+                    <p>Coupons</p>
                 </a>
             </li>
-            <li class="nav-item active-pro ">
-                <a class="nav-link" href="./upgrade.html">
+            <li class="nav-item " {{ Request::is('add-coupons') ? 'active':'' }}>
+                <a class="nav-link" href="{{ url('add-coupons')}}">
+                    <i class="material-icons">developer_board</i>
+                    <p>Add Coupons</p>
+                </a>
+            </li>
+            <li class="nav-item active-pro " >
+                <a class="nav-link" href="">
                     <i class="material-icons">unarchive</i>
-                    <p>Upgrade to PRO</p>
+                    <p>Add Coupons</p>
                 </a>
             </li>
         </ul>

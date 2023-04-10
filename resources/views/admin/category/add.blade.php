@@ -21,6 +21,15 @@
                         <label for="">Description</label>
                         <textarea name="description" rows="3" class="form-control ckeditor"></textarea>
                     </div>
+                    <div class="col-md-12 mb-3">
+                        <label for="">subCategory</label>
+                        <select class="form-select" name="parent_id">
+                            <option value="">Select a subCategory</option>
+                            @foreach($category as $item)
+                                <option value="{{ $item->id }}">{{ $item->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                     <div class="col-md-6 mb-3">
                         <label for="">Status</label>
                         <input type="checkbox"  name="status">

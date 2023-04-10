@@ -16,7 +16,7 @@ class CheckoutController extends Controller
 {
     public function index()
     {
-        $categories = Category::where('status','0')->get();
+        $categories = Category::whereNull('parent_id')->with('children')->get();
         $old_cartitems = Cart::where('user_id', Auth::id())->get();
         foreach ($old_cartitems as $item)
         {

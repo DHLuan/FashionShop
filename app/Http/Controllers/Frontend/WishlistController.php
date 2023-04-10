@@ -14,7 +14,7 @@ class WishlistController extends Controller
 {
     public function index()
     {
-        $categories = Category::where('status','0')->get();
+        $categories = Category::whereNull('parent_id')->with('children')->get();
         $wishlist = Wishlist::where('user_id', Auth::id())->get();
         return view('frontend.wishlist', compact('wishlist','categories'));
     }

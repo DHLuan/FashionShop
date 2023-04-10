@@ -14,7 +14,7 @@ class FrontendController extends Controller
 {
     public function index()
     {
-        $categories = Category::where('status','0')->get();
+        $categories = Category::whereNull('parent_id')->with('children')->get();
         $featured_products = Product::where('trending','1')->take(15)->get();
         $trending_category = Category::where('popular','1')->take(15)->get();
         return view('frontend.index', compact('featured_products', 'trending_category', 'categories'));
@@ -24,14 +24,14 @@ class FrontendController extends Controller
     public function shop()
     {
         $products = Product::all();
-        $categories = Category::where('status','0')->get();
+        $categories = Category::where('popular','0')->get();
 
         return view('frontend.products.shop', compact('products','categories'));
     }
 
     public function category()
     {
-        $categories = Category::where('status','0')->get();
+        $categories = Category::whereNull('parent_id')->with('children')->get();
         $category = Category::where('parent_id',NULL)->get();
         return view('frontend.category', compact( 'category','categories'));
     }
@@ -39,7 +39,7 @@ class FrontendController extends Controller
     public function viewcategory($slug)
     {
         $category = Category::where('slug', $slug)->first();
-        $categories = Category::where('status','0')->get();
+        $categories = Category::whereNull('parent_id')->with('children')->get();
         if($category->children->count() > 0)
         {
             return view('frontend.category1',compact('category','categories'));
@@ -64,7 +64,7 @@ class FrontendController extends Controller
         {
             if(Product::where('slug', $prod_slug)->exists())
             {
-                $categories = Category::where('status','0')->get();
+                $categories = Category::whereNull('parent_id')->with('children')->get();
                 $products = Product::where('slug', $prod_slug)->first();
                 $ratings = Rating::where('prod_id', $products->id)->get();
                 $rating_sum = Rating::where('prod_id', $products->id)->sum('stars_rated');

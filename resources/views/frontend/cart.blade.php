@@ -81,7 +81,8 @@
 
                             <div class="cart-bottom">
                                 <div class="cart-discount">
-                                    <form action="#">
+                                    <form action="{{ url('applyCoupon') }}" method="POST">
+                                        @csrf
                                         <div class="input-group">
                                             <input type="text" class="form-control" required placeholder="coupon code">
                                             <div class="input-group-append">

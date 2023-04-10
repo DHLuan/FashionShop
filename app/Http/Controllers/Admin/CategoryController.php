@@ -19,7 +19,8 @@ class CategoryController extends Controller
 
     public function add()
     {
-        return view('admin.category.add');
+        $category = Category::all();
+        return view('admin.category.add',compact('category'));
     }
 
     public function insert(Request $request)
@@ -31,13 +32,13 @@ class CategoryController extends Controller
             $ext = $file->getClientOriginalExtension();
             $filename = time().'.'.$ext;
             $file->move('assets/uploads/category/',$filename);
-            $file->size(8);
             $category->image= $filename;
         }
 
         $category->name = $request->input('name');
         $category->slug = $request->input('slug');
         $category->description = $request->input('description');
+        $category->parent_id = $request->input('parent_id');
         $category->status = $request->input('status') == TRUE ? '1':'0';
         $category->popular = $request->input('popular') == TRUE ? '1':'0';
         $category->meta_title = $request->input('meta_title');
@@ -67,7 +68,6 @@ class CategoryController extends Controller
             $ext = $file->getClientOriginalExtension();
             $filename = time().'.'.$ext;
             $file->move('assets/uploads/category/',$filename);
-            $file->size(8);
             $category->image= $filename;
         }
 

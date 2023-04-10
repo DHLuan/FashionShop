@@ -26,11 +26,11 @@
                     </div>
                     <div class="col-md-12 mb-3">
                         <label for="">Small Description</label>
-                        <textarea name="small_description" rows="3" class="form-control">{{$products->small_description}}</textarea>
+                        <textarea name="small_description" rows="3" class="form-control ckeditor">{{$products->small_description}}</textarea>
                     </div>
                     <div class="col-md-12 mb-3">
                         <label for="">Description</label>
-                        <textarea name="description" rows="3" class="form-control">{{$products->description}}</textarea>
+                        <textarea name="description" rows="3" class="form-control ckeditor">{{$products->description}}</textarea>
                     </div>
                     <div class="col-md-6 mb-3">
                         <label for="">Original Price</label>
@@ -62,11 +62,11 @@
                     </div>
                     <div class="col-md-12 mb-3">
                         <label for="">Meta Keywords</label>
-                        <textarea name="meta_keywords" rows="3" class="form-control">{{$products->meta_keywords}}</textarea>
+                        <textarea name="meta_keywords" rows="3" class="form-control ckeditor">{{$products->meta_keywords}}</textarea>
                     </div>
                     <div class="col-md-12 mb-3">
                         <label for="">Meta Description</label>
-                        <textarea name="meta_description" rows="3" class="form-control">{{$products->meta_description}}</textarea>
+                        <textarea name="meta_description" rows="3" class="form-control ckeditor">{{$products->meta_description}}</textarea>
                     </div>
                     @if($products->image)
                         <img src="{{asset('assets/uploads/products/'.$products->image)}}" alt="">
@@ -81,5 +81,11 @@
             </form>
         </div>
     </div>
+    <script src="//cdn.ckeditor.com/4.21.0/standard/ckeditor.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.ckeditor').ckeditor();
+        });
+    </script>
 @endsection
 

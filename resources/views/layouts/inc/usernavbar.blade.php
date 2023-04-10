@@ -47,27 +47,43 @@
                                 </li>
                             @endif
                             @else
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="icon-user"></i>
+{{--                                <li class="nav-item dropdown">--}}
+{{--                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">--}}
+{{--                                        <i class="icon-user"></i>--}}
+{{--                                        {{ Auth::user()->name }}--}}
+{{--                                    </a>--}}
+{{--                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">--}}
+{{--                                        <li>--}}
+{{--                                            <a class="dropdown-item" href="#">--}}
+{{--                                                My Profile--}}
+{{--                                            </a>--}}
+{{--                                        </li>--}}
+{{--                                        <li>--}}
+{{--                                            <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">--}}
+{{--                                                {{_('logout')}}--}}
+{{--                                            </a>--}}
+{{--                                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">--}}
+{{--                                                @csrf--}}
+{{--                                            </form>--}}
+{{--                                        </li>--}}
+{{--                                    </ul>--}}
+{{--                                </li>--}}
+                            <li>
+                                <div class="dropdown1">
+                                    <i class="icon-user"></i>
+                                    <a class="nav-link nut_dropdown" href="#">
                                         {{ Auth::user()->name }}
                                     </a>
-                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <li>
-                                            <a class="dropdown-item" href="#">
-                                                My Profile
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                                {{_('logout')}}
-                                            </a>
+                                    <div class="noidung_dropdown">
+                                        <a href="#">My Profile</a>
+                                        <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{_('logout')}}
                                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                                 @csrf
                                             </form>
-                                        </li>
-                                    </ul>
-                                </li>
+                                        </a>
+                                    </div>
+                                </div>
+                            </li>
                             @endguest
                         </ul>
                     </li>
@@ -102,58 +118,48 @@
                                     <div class="col-md-8">
                                         <div class="menu-col">
                                             <div class="row">
-                                                <div class="col-md-6">
-                                                    @foreach($categories as $cate)
-                                                        <div class="menu-title">{{ $cate->name }}</div><!-- End .menu-title -->
-                                                        @foreach($cate->children as $category)
-                                                            <ul>
-                                                                <li><a href="category-list.html" value="{{ $category->id }}">{{ $category->name }}</a></li>
-        {{--                                                        <li><a href="category-2cols.html">Aser</a></li>--}}
-        {{--                                                        <li><a href="category.html">MSI</a></li>--}}
-        {{--                                                        <li><a href="category-4cols.html">lENOVO</a></li>--}}
-        {{--                                                        <li><a href="category-market.html">HP</a></li>--}}
-        {{--                                                        <li><a href="category-market.html">DELL</a></li>--}}
-        {{--                                                        <li><a href="category-market.html">Apple</a></li>--}}
-                                                            </ul>
-                                                        @endforeach
-                                                    @endforeach
-
-                                                    <div class="menu-title">Ghế bàn</div><!-- End .menu-title -->
-                                                    <ul>
-                                                        <li><a href="cart.html">Ghế Gaming</a></li>
-                                                        <li><a href="checkout.html">bàn Gaming</a></li>
-                                                    </ul>
+                                                <div class="col-md-6 ">
+                                                        <ul>
+                                                            @foreach ($categories as $category)
+                                                                @include('frontend.child', ['category' => $category])
+                                                            @endforeach
+                                                        </ul>
+{{--                                                    <div class="menu-title">Ghế bàn</div><!-- End .menu-title -->--}}
+{{--                                                    <ul>--}}
+{{--                                                        <li><a href="cart.html">Ghế Gaming</a></li>--}}
+{{--                                                        <li><a href="checkout.html">bàn Gaming</a></li>--}}
+{{--                                                    </ul>--}}
                                                 </div><!-- End .col-md-6 -->
 
-                                                <div class="col-md-6">
-                                                    <div class="menu-title">Linh kiện PC</div><!-- End .menu-title -->
-                                                    <ul>
-                                                        <li><a href="product-category-boxed.html">VGA</a></li>
-                                                        <li><a href="product-category-fullwidth.html">CPU</a></li>
-                                                        <li><a href="product-category-fullwidth.html">MainBoard</a></li>
-                                                        <li><a href="product-category-fullwidth.html">Ram</a></li>
-                                                        <li><a href="product-category-fullwidth.html">SSD-HDD</a></li>
-                                                        <li><a href="product-category-fullwidth.html">Case</a></li>
-                                                        <li><a href="product-category-fullwidth.html">PSU</a></li>
+{{--                                                <div class="col-md-6">--}}
+{{--                                                    <div class="menu-title">Linh kiện PC</div><!-- End .menu-title -->--}}
+{{--                                                    <ul>--}}
+{{--                                                        <li><a href="product-category-boxed.html">VGA</a></li>--}}
+{{--                                                        <li><a href="product-category-fullwidth.html">CPU</a></li>--}}
+{{--                                                        <li><a href="product-category-fullwidth.html">MainBoard</a></li>--}}
+{{--                                                        <li><a href="product-category-fullwidth.html">Ram</a></li>--}}
+{{--                                                        <li><a href="product-category-fullwidth.html">SSD-HDD</a></li>--}}
+{{--                                                        <li><a href="product-category-fullwidth.html">Case</a></li>--}}
+{{--                                                        <li><a href="product-category-fullwidth.html">PSU</a></li>--}}
 
-                                                    </ul>
+{{--                                                    </ul>--}}
 
-                                                </div><!-- End .col-md-6 -->
+{{--                                                </div><!-- End .col-md-6 -->--}}
                                             </div><!-- End .row -->
                                         </div><!-- End .menu-col -->
                                     </div><!-- End .col-md-8 -->
 
-                                    <div class="col-md-4">
-                                        <div class="banner banner-overlay">
-                                            <a href="category.html" class="banner banner-menu">
-                                                <img src="{{asset('user/assets/images/menu/a1.jpg')}}" alt="Banner">
+{{--                                    <div class="col-md-4">--}}
+{{--                                        <div class="banner banner-overlay">--}}
+{{--                                            <a href="category.html" class="banner banner-menu">--}}
+{{--                                                <img src="{{asset('user/assets/images/menu/a1.jpg')}}" alt="Banner">--}}
 
-                                                <div class="banner-content banner-content-top">
-                                                    <div class="banner-title text-white">Last <br>Chance<br><span><strong>Sale</strong></span></div><!-- End .banner-title -->
-                                                </div><!-- End .banner-content -->
-                                            </a>
-                                        </div><!-- End .banner banner-overlay -->
-                                    </div><!-- End .col-md-4 -->
+{{--                                                <div class="banner-content banner-content-top">--}}
+{{--                                                    <div class="banner-title text-white">Last <br>Chance<br><span><strong>Sale</strong></span></div><!-- End .banner-title -->--}}
+{{--                                                </div><!-- End .banner-content -->--}}
+{{--                                            </a>--}}
+{{--                                        </div><!-- End .banner banner-overlay -->--}}
+{{--                                    </div><!-- End .col-md-4 -->--}}
                                 </div><!-- End .row -->
                             </div><!-- End .megamenu megamenu-md -->
                         </li>

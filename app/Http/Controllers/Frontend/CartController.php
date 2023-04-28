@@ -5,10 +5,13 @@ namespace App\Http\Controllers\frontend;
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\Category;
+use App\Models\Coupon;
 use App\Models\Product;
 use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Facades\Session;
 
 class CartController extends Controller
 {
@@ -45,11 +48,42 @@ class CartController extends Controller
         }
     }
 
-    public function viewcart()
+    public function viewcart(Request $request)
     {
         $categories = Category::whereNull('parent_id')->with('children')->get();
-        $cartitems = Cart::where('user_id', Auth::id())->get();
-        return view('frontend.cart', compact('cartitems', 'categories'));
+        $cartItems = Cart::with('products')->where('user_id', Auth::user()->id)->get();
+        $Coupon = Coupon::all();
+        $total = 0;
+        foreach ($cartItems as $cartItem) {
+            $total += $cartItem->products->selling_price * $cartItem->prod_qty;
+        }
+        if ($request->session()->has('coupon_code')) {
+            $couponCode = session()->get('coupon_code');
+            $coupon = Coupon::where('code', $couponCode)->first();
+
+            if ($coupon) {
+                // Kiểm tra xem mã giảm giá có hợp lệ và còn trong khoảng thời gian hiệu lực hay không
+                if ($this->isValidCoupon($coupon)) {
+                    if ($coupon->type == 'Fixed') {
+                        // Giảm giá theo giá trị cố định
+                        $total -= $coupon->value;
+                    } elseif ($coupon->type == 'Percent') {
+                        // Giảm giá theo phần trăm
+                        $discount = $total * ($coupon->value / 100);
+                        $total -= $discount;
+                    }
+                } else {
+                    // Mã giảm giá không hợp lệ, xóa mã giảm giá khỏi session
+                    session()->forget('coupon_code');
+                }
+            } else {
+                // Mã giảm giá không tồn tại, xóa mã giảm giá khỏi session
+                session()->forget('coupon_code');
+            }
+        }
+
+//        $cartitems = Cart::where('user_id', Auth::id())->get();
+        return view('frontend.cart', compact('cartItems', 'categories','total','Coupon'));
     }
 
     public function updateCart(Request $request)
@@ -95,62 +129,50 @@ class CartController extends Controller
 
     public function applyCoupon(Request $request)
     {
-        $code = $request->input('code');
-        $coupon = Coupon::where('code', $code)->where('status', 1)
-            ->where(function ($query) {
-                $query->whereNull('start_date')
-                    ->orWhere('start_date', '<=', Carbon::now());
-            })
-            ->where(function ($query) {
-                $query->whereNull('end_date')
-                    ->orWhere('end_date', '>=', Carbon::now());
-            })
-            ->first();
+        $couponCode = $request->input('coupon_code');
 
-        if (!$coupon) {
-            return response()->json(['status' => 'Coupon is invalid or expired'], 404);
-        }
+        // Kiểm tra xem mã giảm giá có tồn tại trong cơ sở dữ liệu hay không
+        $coupon = Coupon::where('code', $couponCode)->first();
 
-        $cart_value = $this->getCartValue();
+        if ($coupon) {
+            // Kiểm tra xem mã giảm giá có hợp lệ hay không (ví dụ: còn trong khoảng thời gian hiệu lực, số lượng còn đủ...)
+            if ($this->isValidCoupon($coupon)) {
+                // Lưu mã giảm giá vào session
+                session()->put('coupon_code', $couponCode);
 
-        if ($cart_value < $coupon->cart_value) {
-            return response()->json(['status' => 'Coupon is invalid'], 404);
-        }
-
-        $discount = 0;
-
-        if ($coupon->type == 'fixed') {
-            $discount = $coupon->value;
-        } else {
-            $discount = $cart_value * ($coupon->value / 100);
-        }
-
-        $cartitems = Cart::where('user_id', Auth::id())->get();
-
-        foreach ($cartitems as $cartitem) {
-            $product = Product::find($cartitem->prod_id);
-
-            if ($product) {
-                $subtotal = $product->price * $cartitem->prod_qty;
-
-                if ($subtotal >= $discount) {
-                    $cartitem->discount = $discount;
-                    $cartitem->coupon_code = $coupon->code;
-                    $cartitem->update();
-
-                    $coupon->qty = $coupon->qty - 1;
-                    $coupon->update();
-
-                    return response()->json(['status' => 'Coupon applied successfully'], 200);
-                } else {
-                    $discount -= $subtotal;
-                    $cartitem->discount = $subtotal;
-                    $cartitem->coupon_code = $coupon->code;
-                    $cartitem->update();
-                }
+                // Redirect về trang giỏ hàng với thông báo thành công
+                return redirect('/cart')->with('status', "Coupon applied successfully");
+            } else {
+                return redirect('/cart')->with('status', "Invalid coupon");
             }
+        } else {
+            return redirect('/cart')->with('status', "Coupon not found");
+        }
+    }
+
+    private function isValidCoupon($coupon)
+    {
+        $currentDate = now();
+
+        if ($coupon->start_date && $coupon->start_date > $currentDate) {
+            return false; // Mã giảm giá chưa bắt đầu hiệu lực
         }
 
-        return response()->json(['status' => 'Coupon applied successfully'], 200);
+        if ($coupon->end_date && $coupon->end_date < $currentDate) {
+            return false; // Mã giảm giá đã hết hiệu lực
+        }
+
+        if ($coupon->qty !== null && $coupon->qty <= 0) {
+            return false; // Mã giảm giá đã hết số lượng
+        }
+
+        if ($coupon->status !== 1) {
+            return false; // Mã giảm giá chưa được duyệt
+        }
+
+        // Các kiểm tra khác tùy theo yêu cầu của ứng dụng của bạn
+
+        return true;
     }
+
 }

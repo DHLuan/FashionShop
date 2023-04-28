@@ -26,9 +26,14 @@ class CheckoutController extends Controller
                 $removeItem -> delete();
             }
         }
-        $cartitems = Cart::where('user_id', Auth::id())->get();
+//        $cartitems = Cart::where('user_id', Auth::id())->get();
+        $cartItems = Cart::with('products')->where('user_id', Auth::user()->id)->get();
+        $total = 0;
+        foreach ($cartItems as $cartItem) {
+            $total += $cartItem->products->selling_price * $cartItem->prod_qty;
+        }
 
-        return view('frontend.checkout', compact('cartitems','categories'));
+        return view('frontend.checkout', compact('cartItems','categories','total'));
     }
 
     public function placeOrder(Request $request)

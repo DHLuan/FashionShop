@@ -114,8 +114,8 @@
                                 <div class="summary">
                                     <h3 class="summary-title">Your Order</h3><!-- End .summary-title -->
 
-                                    @php $total = 0; @endphp
-                                    @foreach($cartitems as $item)
+{{--                                    @php $total = 0; @endphp--}}
+                                    @foreach($cartItems as $cartItem)
                                         <table class="table table-summary">
                                         <thead>
                                         <tr>
@@ -127,15 +127,20 @@
 
                                         <tbody>
                                         <tr>
-                                            @php $total += ($item->products->selling_price * $item->prod_qty); @endphp
-                                            <td>{{ $item->products->name }}</td>
+{{--                                            @php $total += ($cartItem->products->selling_price * $item->prod_qty); @endphp--}}
+                                            <td>{{ $cartItem->products->name }}</td>
 {{--                                            <td>{{ $item->prod_qty }}</td>--}}
-                                            <td>${{ $item->products->selling_price }}</td>
+                                            <td>${{ $cartItem->products->selling_price }}</td>
                                         </tr>
+
+                                        @php
+                                            $subtotal = $cartItem->products->selling_price * $cartItem->prod_qty;
+                                            $total += $subtotal;
+                                        @endphp
 
                                         <tr class="summary-subtotal">
                                             <td>Subtotal:</td>
-                                            <td>{{ $total }}</td>
+                                            <td>{{ $subtotal }}</td>
                                         </tr><!-- End .summary-subtotal -->
                                         <tr>
                                             <td>Shipping:</td>

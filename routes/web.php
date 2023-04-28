@@ -36,6 +36,7 @@ Route::get('category/{cate_slug}/{prod_slug}', [FrontendController::class, 'prod
 Route::get('product-list', [FrontendController::class, 'productlistAjax']);
 Route::post('searchproduct', [FrontendController::class, 'searchProduct']);
 Route::get('shop', [FrontendController::class, 'shop']);
+Route::post('apply-coupon',[CartController::class,'applyCoupon']);
 
 Auth::routes();
 
@@ -49,7 +50,6 @@ Route::get('load-cart-data', [CartController::class, 'cartcount']);
 Route::post('add-to-wishlist', [WishlistController::class, 'add']);
 Route::post('delete-wishlist-item', [WishlistController::class, 'deleteitem']);
 Route::get('load-wishlist-count', [   WishlistController::class, 'wishlistcount']);
-Route::post('apply-coupon', [CartController::class, 'applyCoupon']);
 
 Route::middleware(['auth'])->group(function (){
     Route::get('cart', [CartController::class, 'viewcart']);

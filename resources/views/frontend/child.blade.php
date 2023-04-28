@@ -1,5 +1,5 @@
 <li>
-    <a href="cart.html" class="sf-with-ul">{{ $category->name }}</a>
+    <a href="{{ url('view-category/'.$category->slug) }}" class="sf-with-ul">{{ $category->name }}</a>
     @if ($category->children->count())
         <ul>
             @foreach ($category->children as $child)

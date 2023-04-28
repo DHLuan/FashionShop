@@ -21,14 +21,13 @@
             </div><!-- End .container -->
         </nav><!-- End .breadcrumb-nav -->
 
-        @if($cartitems->count() >0)
+        @if($cartItems->count() >0)
             <div class="page-content">
             <div class="cart cartitems">
-                <div class="container">
-
+                <div class="container product_data ">
                         <div class="row">
-                            @php $total = 0; @endphp
-                        <div class="col-lg-9 product_data">
+{{--                            @php $total = 0; @endphp--}}
+                        <div class="col-lg-9 ">
                             <table class="table table-cart table-mobile">
                                 <thead>
                                 <tr>
@@ -39,34 +38,37 @@
                                     <th></th>
                                 </tr>
                                 </thead>
-                                @foreach($cartitems as $item)
+                                @foreach($cartItems as $cartItem)
                                 <tbody>
                                 <tr>
-                                    <td class="product-col">
+                                    <td class="product-col ">
                                         <div class="product">
                                             <figure class="product-media">
                                                 <a href="#">
-                                                    <img src="{{ asset('assets/uploads/products/'.$item->products->image) }}" alt="Product image">
+                                                    <img src="{{ asset('assets/uploads/products/'.$cartItem->products->image) }}" alt="Product image">
                                                 </a>
                                             </figure>
 
                                             <h3 class="product-title">
-                                                <a href="#">{{ $item->products->name }}</a>
+                                                <a href="#">{{ $cartItem->products->name }}</a>
                                             </h3><!-- End .product-title -->
                                         </div><!-- End .product -->
                                     </td>
-                                    <td class="price-col">${{ $item->products->selling_price }}</td>
-                                    <td class="quantity-col">
+                                    <td class="price-col">${{ $cartItem->products->selling_price }}</td>
+                                    <td class="quantity-col product_data ">
                                         <div class="cart-product-quantity">
-                                            <input type="hidden" class="prod_id" value="{{ $item->prod_id }}">
-                                            @if( $item->products->qty >= $item->prod_qty)
-                                                <div class="input-group text-center mb-3" style="width: 100px;">
+                                            @if( $cartItem->products->qty >= $cartItem->prod_qty)
+                                                <div class="input-group text-center mb-3 " style="width: 100px;">
                                                     <button class="input-group-text changeQuantity decrement-btn">-</button>
-                                                    <input type="text" name="quantity" class="form-control qty-input text-center" value="{{ $item->prod_qty }}">
+                                                    <input type="hidden" class="prod_id" value="{{ $cartItem->prod_id }}">
+                                                    <input type="text" name="quantity" class="form-control qty-input text-center" value="{{ $cartItem->prod_qty }}">
                                                     <button class="input-group-text changeQuantity increment-btn">+</button>
                                                 </div>
-                                                @php $total += $item->products->selling_price * $item->prod_qty ; @endphp
-                                                <td class="total-col">${{$total}}</td>
+{{--                                                @php $total += $item->products->selling_price * $item->prod_qty ; @endphp--}}
+                                        @php
+                                            $subtotal = $cartItem->products->selling_price * $cartItem->prod_qty;
+                                        @endphp
+                                    <td class="total-col">${{ $subtotal }}</td>
                                             @else
                                                 <h6>Out of Stock</h6>
                                             @endif
@@ -81,10 +83,16 @@
 
                             <div class="cart-bottom">
                                 <div class="cart-discount">
-                                    <form action="{{ url('applyCoupon') }}" method="POST">
+                                    <form action="{{ url('apply-coupon') }}" method="POST">
                                         @csrf
                                         <div class="input-group">
-                                            <input type="text" class="form-control" required placeholder="coupon code">
+                                            <select class="form-control" name="coupon_code">
+                                                <option value="">Select a coupon</option>
+                                                    @foreach($Coupon as $item)
+                                                        <option value="{{ $item->code }}" >{{ $item->code }}</option>
+                                                    @endforeach
+                                            </select>
+{{--                                            <input type="text" class="form-control" name="coupon_code" required placeholder="coupon code">--}}
                                             <div class="input-group-append">
                                                 <button class="btn btn-outline-primary-2" type="submit"><i class="icon-long-arrow-right"></i></button>
                                             </div><!-- .End .input-group-append -->
@@ -139,11 +147,11 @@
                                         <td>$20.00</td>
                                     </tr><!-- End .summary-shipping-row -->
 
-
                                     <tr class="summary-total">
                                         <td>Total:</td>
                                         <td>${{$total}}</td>
                                     </tr><!-- End .summary-total -->
+
                                     </tbody>
                                 </table><!-- End .table table-summary -->
 

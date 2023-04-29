@@ -50,40 +50,22 @@ class CartController extends Controller
 
     public function viewcart(Request $request)
     {
+        $Coupon = Coupon::all();
         $categories = Category::whereNull('parent_id')->with('children')->get();
         $cartItems = Cart::with('products')->where('user_id', Auth::user()->id)->get();
-        $Coupon = Coupon::all();
-        $total = 0;
+        $Total = 0;
         foreach ($cartItems as $cartItem) {
-            $total += $cartItem->products->selling_price * $cartItem->prod_qty;
+            $Total += $cartItem->products->selling_price * $cartItem->prod_qty;
         }
-        if ($request->session()->has('coupon_code')) {
-            $couponCode = session()->get('coupon_code');
-            $coupon = Coupon::where('code', $couponCode)->first();
 
-            if ($coupon) {
-                // Kiểm tra xem mã giảm giá có hợp lệ và còn trong khoảng thời gian hiệu lực hay không
-                if ($this->isValidCoupon($coupon)) {
-                    if ($coupon->type == 'Fixed') {
-                        // Giảm giá theo giá trị cố định
-                        $total -= $coupon->value;
-                    } elseif ($coupon->type == 'Percent') {
-                        // Giảm giá theo phần trăm
-                        $discount = $total * ($coupon->value / 100);
-                        $total -= $discount;
-                    }
-                } else {
-                    // Mã giảm giá không hợp lệ, xóa mã giảm giá khỏi session
-                    session()->forget('coupon_code');
-                }
-            } else {
-                // Mã giảm giá không tồn tại, xóa mã giảm giá khỏi session
-                session()->forget('coupon_code');
-            }
-        }
+        $discountedAmount = session()->get('discounted_amount', 0);
+
+        // Clear the session values
+        session()->forget('coupon_code');
+        session()->forget('discounted_amount');
 
 //        $cartitems = Cart::where('user_id', Auth::id())->get();
-        return view('frontend.cart', compact('cartItems', 'categories','total','Coupon'));
+        return view('frontend.cart', compact('cartItems', 'categories','Total','Coupon','discountedAmount'));
     }
 
     public function updateCart(Request $request)
@@ -133,12 +115,20 @@ class CartController extends Controller
 
         // Kiểm tra xem mã giảm giá có tồn tại trong cơ sở dữ liệu hay không
         $coupon = Coupon::where('code', $couponCode)->first();
+        $cartItems = Cart::with('products')->where('user_id', Auth::user()->id)->get();
+        $total = 0;
+        foreach ($cartItems as $cartItem) {
+            $total += $cartItem->products->selling_price * $cartItem->prod_qty;
+        }
 
         if ($coupon) {
             // Kiểm tra xem mã giảm giá có hợp lệ hay không (ví dụ: còn trong khoảng thời gian hiệu lực, số lượng còn đủ...)
             if ($this->isValidCoupon($coupon)) {
                 // Lưu mã giảm giá vào session
                 session()->put('coupon_code', $couponCode);
+
+                $discountedAmount = $this->calculateDiscountedAmount($coupon, $total);
+                session()->put('discounted_amount', $discountedAmount);
 
                 // Redirect về trang giỏ hàng với thông báo thành công
                 return redirect('/cart')->with('status', "Coupon applied successfully");
@@ -173,6 +163,22 @@ class CartController extends Controller
         // Các kiểm tra khác tùy theo yêu cầu của ứng dụng của bạn
 
         return true;
+    }
+
+    public function calculateDiscountedAmount($coupon, $total)
+    {
+        $discountedAmount = 0;
+
+        if ($coupon->type === 'fixed') {
+            $discountedAmount =$coupon->value;
+        } elseif ($coupon->type === 'percent') {
+            $discountedAmount = ($coupon->value / 100) * $total;
+        }
+
+        // Make sure the discounted amount doesn't exceed the total
+        $discountedAmount = min($discountedAmount, $total);
+
+        return $discountedAmount;
     }
 
 }

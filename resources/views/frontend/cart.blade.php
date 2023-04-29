@@ -110,7 +110,7 @@
                                     <tbody>
                                     <tr class="summary-subtotal">
                                         <td>Subtotal:</td>
-                                        <td>${{$total}}</td>
+                                        <td>${{$Total}}</td>
                                     </tr><!-- End .summary-subtotal -->
                                     <tr class="summary-shipping">
                                         <td>Shipping:</td>
@@ -149,9 +149,18 @@
 
                                     <tr class="summary-total">
                                         <td>Total:</td>
-                                        <td>${{$total}}</td>
+                                        <td>${{ $Total }}</td>
                                     </tr><!-- End .summary-total -->
-
+                                    @if ($discountedAmount > 0)
+                                        <tr class="summary-discount">
+                                            <td>Discount:</td>
+                                            <td>-${{ $discountedAmount }}</td>
+                                        </tr><!-- End .summary-discount -->
+                                        <tr class="summary-total">
+                                            <td>Total after discount:</td>
+                                            <td>${{ $Total - $discountedAmount }}</td>
+                                        </tr><!-- End .summary-total -->
+                                    @endif
                                     </tbody>
                                 </table><!-- End .table table-summary -->
 

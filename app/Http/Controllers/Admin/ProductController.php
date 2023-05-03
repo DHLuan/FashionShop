@@ -12,12 +12,18 @@ class ProductController extends Controller
 {
     public function index()
     {
+        // Clear the session values
+        session()->forget('coupon_code');
+        session()->forget('discounted_amount');
         $products = Product::all();
         return view('admin.product.index', compact('products'));
     }
 
     public function add()
     {
+        // Clear the session values
+        session()->forget('coupon_code');
+        session()->forget('discounted_amount');
         $category = Category::all();
         return view('admin.product.add', compact('category'));
     }
@@ -53,6 +59,9 @@ class ProductController extends Controller
 
     public function edit($id)
     {
+        // Clear the session values
+        session()->forget('coupon_code');
+        session()->forget('discounted_amount');
         $products = Product::find($id);
         return view('admin.product.edit', compact('products'));
     }

@@ -29,7 +29,7 @@
                     <li>
                         <a href="#">Links</a>
                         <ul>
-                            <li><a href="tel:#"><i class="icon-phone"></i>Call: +0123 456 789</a></li>
+                            <li><a href="tel:0903821206"><i class="icon-phone"></i>Call: 0903821206</a></li>
                             <li><a href="{{ url('wishlist') }}"><i class="icon-heart-o"></i>My Wishlist <span class="badge badge-pill bg-success wishlist-count">0</span></a></li>
                             <li><a href="about.html">About Us</a></li>
                             <li><a href="contact.html">Contact Us</a></li>
@@ -47,27 +47,6 @@
                                 </li>
                             @endif
                             @else
-{{--                                <li class="nav-item dropdown">--}}
-{{--                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">--}}
-{{--                                        <i class="icon-user"></i>--}}
-{{--                                        {{ Auth::user()->name }}--}}
-{{--                                    </a>--}}
-{{--                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">--}}
-{{--                                        <li>--}}
-{{--                                            <a class="dropdown-item" href="#">--}}
-{{--                                                My Profile--}}
-{{--                                            </a>--}}
-{{--                                        </li>--}}
-{{--                                        <li>--}}
-{{--                                            <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">--}}
-{{--                                                {{_('logout')}}--}}
-{{--                                            </a>--}}
-{{--                                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">--}}
-{{--                                                @csrf--}}
-{{--                                            </form>--}}
-{{--                                        </li>--}}
-{{--                                    </ul>--}}
-{{--                                </li>--}}
                             <li>
                                 <div class="dropdown1">
                                     <i class="icon-user"></i>

@@ -60,9 +60,7 @@ class CartController extends Controller
 
         $discountedAmount = session()->get('discounted_amount', 0);
 
-        // Clear the session values
-        session()->forget('coupon_code');
-        session()->forget('discounted_amount');
+
 
 //        $cartitems = Cart::where('user_id', Auth::id())->get();
         return view('frontend.cart', compact('cartItems', 'categories','Total','Coupon','discountedAmount'));

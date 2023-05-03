@@ -27,6 +27,7 @@ class Order extends Model
         'payment_mode',
         'payment_id',
         'status',
+        'coupon_code',
         'message',
         'tracking_no',
     ];

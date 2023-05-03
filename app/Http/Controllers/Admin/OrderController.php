@@ -10,12 +10,18 @@ class OrderController extends Controller
 {
     public function index()
     {
+        // Clear the session values
+        session()->forget('coupon_code');
+        session()->forget('discounted_amount');
         $orders = Order::where('status','0')->get();
         return view('admin.orders.index', compact('orders'));
     }
 
     public function view($id)
     {
+        // Clear the session values
+        session()->forget('coupon_code');
+        session()->forget('discounted_amount');
         $orders = Order::where('id', $id)->first();
         return view('admin.orders.view', compact('orders'));
     }
@@ -30,6 +36,9 @@ class OrderController extends Controller
 
     public function orderhistory()
     {
+        // Clear the session values
+        session()->forget('coupon_code');
+        session()->forget('discounted_amount');
         $orders = Order::where('status','1')->get();
         return view('admin.orders.history', compact('orders'));
     }

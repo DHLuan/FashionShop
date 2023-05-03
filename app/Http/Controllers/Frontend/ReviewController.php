@@ -14,6 +14,9 @@ class ReviewController extends Controller
 {
     public function add($product_slug)
     {
+        // Clear the session values
+        session()->forget('coupon_code');
+        session()->forget('discounted_amount');
         $product = Product::where('slug', $product_slug)->where('status','0')->first();
         $categories = Category::whereNull('parent_id')->with('children')->get();
 

@@ -13,12 +13,18 @@ class CategoryController extends Controller
 {
     public function index()
     {
+        // Clear the session values
+        session()->forget('coupon_code');
+        session()->forget('discounted_amount');
         $category = Category::all();
         return view('admin.category.index', compact('category'));
     }
 
     public function add()
     {
+        // Clear the session values
+        session()->forget('coupon_code');
+        session()->forget('discounted_amount');
         $category = Category::all();
         return view('admin.category.add',compact('category'));
     }
@@ -50,6 +56,9 @@ class CategoryController extends Controller
 
     public function edit($id)
     {
+        // Clear the session values
+        session()->forget('coupon_code');
+        session()->forget('discounted_amount');
         $category = Category::find($id);
         return view('admin.category.edit', compact('category'));
     }

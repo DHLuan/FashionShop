@@ -14,6 +14,9 @@ class WishlistController extends Controller
 {
     public function index()
     {
+        // Clear the session values
+        session()->forget('coupon_code');
+        session()->forget('discounted_amount');
         $categories = Category::whereNull('parent_id')->with('children')->get();
         $wishlist = Wishlist::where('user_id', Auth::id())->get();
         return view('frontend.wishlist', compact('wishlist','categories'));

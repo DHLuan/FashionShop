@@ -14,6 +14,9 @@ class FrontendController extends Controller
 {
     public function index()
     {
+        // Clear the session values
+        session()->forget('coupon_code');
+        session()->forget('discounted_amount');
         $categories = Category::whereNull('parent_id')->with('children')->get();
         $featured_products = Product::where('trending','1')->take(15)->get();
         $trending_category = Category::where('popular','1')->take(15)->get();
@@ -23,6 +26,9 @@ class FrontendController extends Controller
 
     public function shop()
     {
+        // Clear the session values
+        session()->forget('coupon_code');
+        session()->forget('discounted_amount');
         $products = Product::all();
         $categories = Category::where('popular','0')->get();
 
@@ -31,6 +37,9 @@ class FrontendController extends Controller
 
     public function category()
     {
+        // Clear the session values
+        session()->forget('coupon_code');
+        session()->forget('discounted_amount');
         $categories = Category::whereNull('parent_id')->with('children')->get();
         $category = Category::where('parent_id',NULL)->get();
         return view('frontend.category', compact( 'category','categories'));
@@ -38,6 +47,9 @@ class FrontendController extends Controller
 
     public function viewcategory($slug)
     {
+        // Clear the session values
+        session()->forget('coupon_code');
+        session()->forget('discounted_amount');
         $category = Category::where('slug', $slug)->first();
         $categories = Category::whereNull('parent_id')->with('children')->get();
         if($category->children->count() > 0)
@@ -60,6 +72,9 @@ class FrontendController extends Controller
 
     public function productview($cate_slug, $prod_slug)
     {
+        // Clear the session values
+        session()->forget('coupon_code');
+        session()->forget('discounted_amount');
         if(Category::where('slug', $cate_slug)->exists())
         {
             if(Product::where('slug', $prod_slug)->exists())
@@ -106,6 +121,9 @@ class FrontendController extends Controller
 
     public function searchProduct(Request $request)
     {
+        // Clear the session values
+        session()->forget('coupon_code');
+        session()->forget('discounted_amount');
         $searched_product = $request->product_name;
 
         if($searched_product != "")

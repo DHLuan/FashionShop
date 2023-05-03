@@ -30,6 +30,7 @@ return new class extends Migration
             $table->string('payment_mode');
             $table->string('payment_id')->nullable();
             $table->tinyInteger('status')->default('0');
+            $table->string('coupon_code');
             $table->string('message')->nullable();
             $table->string('tracking_no');
             $table->timestamps();

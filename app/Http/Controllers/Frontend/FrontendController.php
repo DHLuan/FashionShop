@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\Rating;
 use App\Models\Review;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,10 +18,11 @@ class FrontendController extends Controller
         // Clear the session values
         session()->forget('coupon_code');
         session()->forget('discounted_amount');
+        $user = Auth::user();
         $categories = Category::whereNull('parent_id')->with('children')->get();
         $featured_products = Product::where('trending','1')->take(15)->get();
         $trending_category = Category::where('popular','1')->take(15)->get();
-        return view('frontend.index', compact('featured_products', 'trending_category', 'categories'));
+        return view('frontend.index', compact('featured_products', 'trending_category', 'categories','user'));
     }
 
 

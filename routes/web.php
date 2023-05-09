@@ -13,6 +13,9 @@ use App\Http\Controllers\Frontend\WishlistController;
 use App\Http\Controllers\Frontend\RatingController;
 use App\Http\Controllers\Frontend\ReviewController;
 use App\Http\Controllers\Admin\CouponController;
+use App\Http\Controllers\Frontend\ProfileController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\ResetPasswordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +31,15 @@ use App\Http\Controllers\Admin\CouponController;
 //Route::get('/', function () {
 //    return view('welcome');
 //});
+
+// Quên mật khẩu
+Route::get('forgot-password', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+Route::post('forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+
+// Đặt lại mật khẩu
+Route::get('reset-password/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
+Route::post('reset-password', [ResetPasswordController::class, 'reset'])->name('password.update');
+
 
 Route::get('/', [FrontendController::class, 'index']);
 Route::get('category', [FrontendController::class, 'category']);
@@ -61,6 +73,10 @@ Route::middleware(['auth'])->group(function (){
     Route::get('view-order/{id}', [UserController::class, 'view']);
 
     Route::post('add-rating', [RatingController::class, 'add']);
+
+    Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
 
     Route::get('add-review/{product_slug}/userreview', [ReviewController::class, 'add']);
     Route::post('add-review', [ReviewController::class, 'create']);

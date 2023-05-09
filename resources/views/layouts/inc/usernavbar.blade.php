@@ -33,7 +33,6 @@
                             <li><a href="{{ url('wishlist') }}"><i class="icon-heart-o"></i>My Wishlist <span class="badge badge-pill bg-success wishlist-count">0</span></a></li>
                             <li><a href="about.html">About Us</a></li>
                             <li><a href="contact.html">Contact Us</a></li>
-{{--                            <li><a href="{{_('Login')}}" data-toggle="modal"><i class="icon-user"></i>Login</a></li>--}}
                         @guest
                             @if(Route::has('login'))
                                 <li class="nav-item">
@@ -54,7 +53,8 @@
                                         {{ Auth::user()->name }}
                                     </a>
                                     <div class="noidung_dropdown">
-                                        <a href="#">My Profile</a>
+                                        <a href="{{ route('profile.show') }}">My Profile</a>
+                                        <a href="{{ 'my-orders' }}">My Order</a>
                                         <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{_('logout')}}
                                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                                 @csrf
@@ -103,42 +103,10 @@
                                                                 @include('frontend.child', ['category' => $category])
                                                             @endforeach
                                                         </ul>
-{{--                                                    <div class="menu-title">Ghế bàn</div><!-- End .menu-title -->--}}
-{{--                                                    <ul>--}}
-{{--                                                        <li><a href="cart.html">Ghế Gaming</a></li>--}}
-{{--                                                        <li><a href="checkout.html">bàn Gaming</a></li>--}}
-{{--                                                    </ul>--}}
                                                 </div><!-- End .col-md-6 -->
-
-{{--                                                <div class="col-md-6">--}}
-{{--                                                    <div class="menu-title">Linh kiện PC</div><!-- End .menu-title -->--}}
-{{--                                                    <ul>--}}
-{{--                                                        <li><a href="product-category-boxed.html">VGA</a></li>--}}
-{{--                                                        <li><a href="product-category-fullwidth.html">CPU</a></li>--}}
-{{--                                                        <li><a href="product-category-fullwidth.html">MainBoard</a></li>--}}
-{{--                                                        <li><a href="product-category-fullwidth.html">Ram</a></li>--}}
-{{--                                                        <li><a href="product-category-fullwidth.html">SSD-HDD</a></li>--}}
-{{--                                                        <li><a href="product-category-fullwidth.html">Case</a></li>--}}
-{{--                                                        <li><a href="product-category-fullwidth.html">PSU</a></li>--}}
-
-{{--                                                    </ul>--}}
-
-{{--                                                </div><!-- End .col-md-6 -->--}}
                                             </div><!-- End .row -->
                                         </div><!-- End .menu-col -->
                                     </div><!-- End .col-md-8 -->
-
-{{--                                    <div class="col-md-4">--}}
-{{--                                        <div class="banner banner-overlay">--}}
-{{--                                            <a href="category.html" class="banner banner-menu">--}}
-{{--                                                <img src="{{asset('user/assets/images/menu/a1.jpg')}}" alt="Banner">--}}
-
-{{--                                                <div class="banner-content banner-content-top">--}}
-{{--                                                    <div class="banner-title text-white">Last <br>Chance<br><span><strong>Sale</strong></span></div><!-- End .banner-title -->--}}
-{{--                                                </div><!-- End .banner-content -->--}}
-{{--                                            </a>--}}
-{{--                                        </div><!-- End .banner banner-overlay -->--}}
-{{--                                    </div><!-- End .col-md-4 -->--}}
                                 </div><!-- End .row -->
                             </div><!-- End .megamenu megamenu-md -->
                         </li>
@@ -184,61 +152,6 @@
                         <i class="icon-shopping-cart"></i>
                         <span class="cart-count">0</span>
                     </a>
-
-{{--                    <div class="dropdown-menu dropdown-menu-right">--}}
-{{--                        <div class="dropdown-cart-products">--}}
-{{--                            <div class="product">--}}
-{{--                                <div class="product-cart-details">--}}
-{{--                                    <h4 class="product-title">--}}
-{{--                                        <a href="product.html">Beige knitted elastic runner shoes</a>--}}
-{{--                                    </h4>--}}
-
-{{--                                    <span class="cart-product-info">--}}
-{{--                                                <span class="cart-product-qty">1</span>--}}
-{{--                                                x $84.00--}}
-{{--                                            </span>--}}
-{{--                                </div><!-- End .product-cart-details -->--}}
-
-{{--                                <figure class="product-image-container">--}}
-{{--                                    <a href="product.html" class="product-image">--}}
-{{--                                        <img src="assets/images/products/cart/product-1.jpg" alt="product">--}}
-{{--                                    </a>--}}
-{{--                                </figure>--}}
-{{--                                <a href="#" class="btn-remove" title="Remove Product"><i class="icon-close"></i></a>--}}
-{{--                            </div><!-- End .product -->--}}
-
-{{--                            <div class="product">--}}
-{{--                                <div class="product-cart-details">--}}
-{{--                                    <h4 class="product-title">--}}
-{{--                                        <a href="product.html">Blue utility pinafore denim dress</a>--}}
-{{--                                    </h4>--}}
-
-{{--                                    <span class="cart-product-info">--}}
-{{--                                                <span class="cart-product-qty">1</span>--}}
-{{--                                                x $76.00--}}
-{{--                                            </span>--}}
-{{--                                </div><!-- End .product-cart-details -->--}}
-
-{{--                                <figure class="product-image-container">--}}
-{{--                                    <a href="product.html" class="product-image">--}}
-{{--                                        <img src="assets/images/products/cart/product-2.jpg" alt="product">--}}
-{{--                                    </a>--}}
-{{--                                </figure>--}}
-{{--                                <a href="#" class="btn-remove" title="Remove Product"><i class="icon-close"></i></a>--}}
-{{--                            </div><!-- End .product -->--}}
-{{--                        </div><!-- End .cart-product -->--}}
-
-{{--                        <div class="dropdown-cart-total">--}}
-{{--                            <span>Total</span>--}}
-
-{{--                            <span class="cart-total-price">$160.00</span>--}}
-{{--                        </div><!-- End .dropdown-cart-total -->--}}
-
-{{--                        <div class="dropdown-cart-action">--}}
-{{--                            <a href="cart.html" class="btn btn-primary">View Cart</a>--}}
-{{--                            <a href="checkout.html" class="btn btn-outline-primary-2"><span>Checkout</span><i class="icon-long-arrow-right"></i></a>--}}
-{{--                        </div><!-- End .dropdown-cart-total -->--}}
-{{--                    </div><!-- End .dropdown-menu -->--}}
                 </div><!-- End .cart-dropdown -->
             </div><!-- End .header-right -->
         </div><!-- End .container -->

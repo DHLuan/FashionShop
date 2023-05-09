@@ -5,43 +5,69 @@
 @endsection
 
 @section('content')
-    <div class="container">
+    <div class="page-inner">
+        <div class="page-header">
+            <h4 class="page-title">Order</h4>
+            <ul class="breadcrumbs">
+                <li class="nav-home">
+                    <a href="#">
+                        <i class="flaticon-home"></i>
+                    </a>
+                </li>
+                <li class="separator">
+                    <i class="flaticon-right-arrow"></i>
+                </li>
+                <li class="nav-item">
+                    <a href="#">Order</a>
+                </li>
+                <li class="separator">
+                    <i class="flaticon-right-arrow"></i>
+                </li>
+                <li class="nav-item">
+                    <a href="#">Order new</a>
+                </li>
+            </ul>
+        </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="text-white ">New Orders
-                            <a href="{{ 'order-history' }}" class="btn btn-warning float-right">Order History</a>
-                        </h4>
+                        <div class="card-header">
+                            <div class="d-flex align-items-center">
+                                <h4 class="card-title">New Orders</h4>
+                                <a href="{{ 'order-history' }}" class="btn btn-primary btn-round ml-auto"  style="color: whitesmoke">
+                                    Order History
+                                </a>
+                            </div>
+                        </div>
                     </div>
                     <div class="card-body">
-                        <table class="table table-bordered">
-                            <thead>
-                            <tr>
-                                <th>Order Date</th>
-                                <th>Tracking Number</th>
-                                <th>Total Price</th>
-                                <th>Status</th>
-                                <th>Action</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach($orders as $item)
-                                <tr>
-                                    <td>{{ date('d-m-y', strtotime($item->created_at)) }}</td>
-                                    <td>{{ $item->tracking_no }}</td>
-                                    <td>{{ $item->total_price }}</td>
-                                    <td>{{ $item->status == '0' ? 'pending' : 'completed' }}</td>
-                                    <td>
-                                        <a href="{{ url('admin/view-order/'.$item->id) }}" class="btn btn-primary">View</a>
-                                    </td>
-                                </tr>
-                            @endforeach
-                            <tr>
-
-                            </tr>
-                            </tbody>
-                        </table>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Order Date</th>
+                                        <th>Tracking Number</th>
+                                        <th>Total Price</th>
+                                        <th>Status</th>
+                                        <th style="width: 10%">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($orders as $item)
+                                        <tr>
+                                            <td>{{ date('d-m-y', strtotime($item->created_at)) }}</td>
+                                            <td>{{ $item->tracking_no }}</td>
+                                            <td>{{ $item->total_price }}</td>
+                                            <td>{{ $item->status == '0' ? 'pending' : 'completed' }}</td>
+                                            <td>
+                                                <a href="{{ url('admin/view-order/'.$item->id) }}" class="btn btn-primary">View</a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

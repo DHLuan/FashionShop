@@ -44,20 +44,6 @@
                                             </a><!-- End .banner-link -->
                                         </div><!-- End .banner -->
 
-{{--                                        @if($cate->children->count() > 0)--}}
-{{--                                            <div class="row">--}}
-{{--                                                @foreach($cate->children as $child)--}}
-{{--                                                    <div class="col-md-6 col-sm-6 col-xs-12">--}}
-{{--                                                        <a href="{{ url('view-category/'.$child->slug) }}" class="cat-block">--}}
-{{--                                                            <img src="{{ asset('assets/uploads/category/'.$child->image) }}" alt="Category Image">--}}
-{{--                                                            <h3 class="cat-title">{{ $child->name }}</h3>--}}
-{{--                                                            <span class="cat-count">0 Products</span>--}}
-{{--                                                        </a><!-- End .cat-block -->--}}
-{{--                                                    </div><!-- End .col-md-6 -->--}}
-{{--                                                @endforeach--}}
-{{--                                            </div><!-- End .row -->--}}
-{{--                                        @endif--}}
-
                                     @endforeach
                                     </div><!-- End .col-sm-8 -->
 

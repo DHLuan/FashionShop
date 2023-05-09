@@ -1,35 +1,26 @@
 <footer class="footer">
     <div class="container-fluid">
-        <nav class="float-left">
-            <ul>
-                <li>
-                    <a href="https://www.creative-tim.com">
-                        Creative Tim
+        <nav class="pull-left">
+            <ul class="nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="https://www.themekita.com">
+                        ThemeKita
                     </a>
                 </li>
-                <li>
-                    <a href="https://creative-tim.com/presentation">
-                        About Us
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        Help
                     </a>
                 </li>
-                <li>
-                    <a href="http://blog.creative-tim.com">
-                        Blog
-                    </a>
-                </li>
-                <li>
-                    <a href="https://www.creative-tim.com/license">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
                         Licenses
                     </a>
                 </li>
             </ul>
         </nav>
-        <div class="copyright float-right">
-            &copy;
-            <script>
-                document.write(new Date().getFullYear())
-            </script>, made with <i class="material-icons">favorite</i> by
-            <a href="https://www.creative-tim.com" target="_blank">Creative Tim</a> for a better web.
+        <div class="copyright ml-auto">
+            2018, made with <i class="fa fa-heart heart text-danger"></i> by <a href="https://www.themekita.com">ThemeKita</a>
         </div>
     </div>
 </footer>

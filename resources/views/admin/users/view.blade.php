@@ -1,7 +1,29 @@
 @extends('layouts.admin')
 
 @section('content')
-    <div class="container">
+    <div class="page-inner">
+        <div class="page-header">
+            <h4 class="page-title">User</h4>
+            <ul class="breadcrumbs">
+                <li class="nav-home">
+                    <a href="#">
+                        <i class="flaticon-home"></i>
+                    </a>
+                </li>
+                <li class="separator">
+                    <i class="flaticon-right-arrow"></i>
+                </li>
+                <li class="nav-item">
+                    <a href="#">User</a>
+                </li>
+                <li class="separator">
+                    <i class="flaticon-right-arrow"></i>
+                </li>
+                <li class="nav-item">
+                    <a href="#">View User</a>
+                </li>
+            </ul>
+        </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="card">

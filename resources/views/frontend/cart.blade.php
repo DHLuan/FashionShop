@@ -26,7 +26,6 @@
             <div class="cart cartitems">
                 <div class="container product_data ">
                         <div class="row">
-{{--                            @php $total = 0; @endphp--}}
                         <div class="col-lg-9 ">
                             <table class="table table-cart table-mobile">
                                 <thead>
@@ -64,11 +63,7 @@
                                                     <input type="text" name="quantity" class="form-control qty-input text-center" value="{{ $cartItem->prod_qty }}">
                                                     <button class="input-group-text changeQuantity increment-btn">+</button>
                                                 </div>
-{{--                                                @php $total += $item->products->selling_price * $item->prod_qty ; @endphp--}}
-                                        @php
-                                            $subtotal = $cartItem->products->selling_price * $cartItem->prod_qty;
-                                        @endphp
-                                    <td class="total-col">${{ $subtotal }}</td>
+                                    <td class="total-col ">${{ $cartItem->products->selling_price * $cartItem->prod_qty }} </td>
                                             @else
                                                 <h6>Out of Stock</h6>
                                             @endif

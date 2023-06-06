@@ -187,6 +187,7 @@ $(document).ready(function () {
             success: function (response) {
                 $('.cartitems').load(location.href + " .cartitems");
                 // window.location.reload();
+
             }
         });
     });

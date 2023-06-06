@@ -61,7 +61,6 @@ class CartController extends Controller
         $discountedAmount = session()->get('discounted_amount', 0);
 
 
-
 //        $cartitems = Cart::where('user_id', Auth::id())->get();
         return view('frontend.cart', compact('cartItems', 'categories','Total','Coupon','discountedAmount'));
     }
@@ -71,12 +70,14 @@ class CartController extends Controller
         $prod_id = $request->input('prod_id');
         $product_qty = $request->input('prod_qty');
 
+
         if(Auth::check())
         {
             if (Cart::where('prod_id',$prod_id)->where('user_id',Auth::id())->exists())
             {
                 $cart = Cart::where('prod_id',$prod_id)->where('user_id', Auth::id())->first();
                 $cart -> prod_qty = $product_qty;
+                $subtotal = 0;
                 $cart -> update();
                 return response()->json(['status'=> "Quantity updated"]);
             }

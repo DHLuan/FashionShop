@@ -16,6 +16,8 @@ use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Frontend\ProfileController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Mail\MyTestEmail;
+use Illuminate\Support\Facades\Mail;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +33,12 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 //Route::get('/', function () {
 //    return view('welcome');
 //});
+Route::get('/testroute', function() {
+    $name = "Funny Coder";
+
+    // The email sending is done using the to method on the Mail facade
+    Mail::to('testreceiver@gmail.com’')->send(new MyTestEmail($name));
+});
 
 // Quên mật khẩu
 Route::get('forgot-password', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
@@ -119,6 +127,7 @@ Route::middleware(['auth','isAdmin'])-> group(function () {
 
     Route::get('view-user/{id}', [DashboardController::class, 'viewuser']);
     Route::get('users', [DashboardController::class, 'users']);
+    Route::post('/users/{id}/update-role', [DashboardController::class, 'updateRole'])->name('users.updateRole');
 });
 
 

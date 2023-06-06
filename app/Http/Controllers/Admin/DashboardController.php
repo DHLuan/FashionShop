@@ -25,4 +25,28 @@ class DashboardController extends Controller
         $users = User::find($id);
         return view('admin.users.view', compact('users'));
     }
+
+    public function updateRole(Request $request, $id)
+    {
+        // Lấy thông tin người dùng từ id
+        $user = User::find($id);
+
+        if (!$user) {
+            return redirect()->back()->with('error', 'Người dùng không tồn tại.');
+        }
+
+        // Kiểm tra xem vai trò được chọn là User hay Admin
+        if ($request->role == '0') {
+            $user->role_as = '0'; // User
+        } elseif ($request->role == '1') {
+            $user->role_as = '1'; // Admin
+        } else {
+            return redirect()->back()->with('error', 'Vai trò không hợp lệ.');
+        }
+
+        $user->save();
+
+        return redirect('/dashboard')->with('status',"user update Successfully");
+    }
+
 }

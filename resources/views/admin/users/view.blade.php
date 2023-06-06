@@ -80,6 +80,29 @@
                                 <div class="p-2 border">{{ $users->pincode }}</div>
                             </div>
                         </div>
+                        <form action="{{ route('users.updateRole', $users->id) }}" method="POST">
+                            @csrf
+                            <div class="col-md-12 mt-4">
+                                <label for="">Change Role</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="role" id="userRole" value="0" {{ $users->role_as == '0' ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="userRole">
+                                        User
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="role" id="adminRole" value="1" {{ $users->role_as == '1' ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="adminRole">
+                                        Admin
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row mt-4">
+                                <div class="col-md-12">
+                                    <button type="submit" class="btn btn-primary" id="updateRoleBtn">Update Role</button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

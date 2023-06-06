@@ -88,7 +88,7 @@
         <script src="{{ asset('frontend/js/owl.carousel.min.js') }}"></script>
         <script src="{{ asset('frontend/js/checkout.js') }}"></script>
 
-        <script src="{{asset('user/assets/js/jquery.min.js')}}"></script>
+
         <script src="{{asset('user/assets/js/bootstrap.bundle.min.js')}}"></script>
         <script src="{{asset('user/assets/js/jquery.hoverIntent.min.js')}}"></script>
         <script src="{{asset('user/assets/js/jquery.waypoints.min.js')}}"></script>

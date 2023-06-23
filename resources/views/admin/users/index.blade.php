@@ -1,5 +1,9 @@
 @extends('layouts.admin')
 
+@section('title')
+    User List
+@endsection
+
 @section('content')
     <div class="page-inner">
         <div class="page-header">

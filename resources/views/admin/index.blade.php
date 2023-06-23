@@ -1,5 +1,9 @@
 @extends('layouts.admin')
 
+@section('title')
+    Dashboard
+@endsection
+
 @section('content')
             <div class="panel-header bg-primary-gradient">
                 <div class="page-inner py-5">

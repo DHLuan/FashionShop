@@ -1,5 +1,9 @@
 @extends('layouts.admin')
 
+@section('title')
+    Add Product
+@endsection
+
 @section('content')
             <div class="page-inner">
                 <div class="page-header">

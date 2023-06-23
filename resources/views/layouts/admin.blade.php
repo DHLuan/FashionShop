@@ -72,6 +72,11 @@
 
 <!-- Sweet Alert -->
 <script src="{{asset('admin/assets/js/plugin/sweetalert/sweetalert.min.js')}}"></script>
+@if(session('status'))
+    <script>
+        swal("{{ session('status') }}");
+    </script>
+@endif
 
 <!-- Atlantis JS -->
 <script src="{{asset('admin/assets/js/atlantis.min.js')}}"></script>

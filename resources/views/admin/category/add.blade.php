@@ -54,7 +54,7 @@
                                 </div>
                                 <div class="form-group col-md-12 mb-3">
                                     <label for="exampleFormControlSelect1">SubCategory</label>
-                                    <select class="form-control" id="exampleFormControlSelect1" name="cate_id">
+                                    <select class="form-control" id="exampleFormControlSelect1" name="parent_id">
                                         <option value="">Select a SubCategory</option>
                                         @foreach($category as $item)
                                             <option value="{{ $item->id }}">{{ $item->name }}</option>

@@ -54,7 +54,7 @@ Route::get('category', [FrontendController::class, 'category']);
 Route::get('view-category/{slug}', [FrontendController::class, 'viewcategory']);
 Route::get('category/{cate_slug}/{prod_slug}', [FrontendController::class, 'productview']);
 Route::get('product-list', [FrontendController::class, 'productlistAjax']);
-Route::post('searchproduct', [FrontendController::class, 'searchProduct']);
+Route::get('searchproduct', [FrontendController::class, 'searchProduct']);
 Route::get('shop', [FrontendController::class, 'shop']);
 Route::post('apply-coupon',[CartController::class,'applyCoupon']);
 

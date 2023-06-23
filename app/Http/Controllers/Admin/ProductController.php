@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
+//use Illuminate\Support\Facades\File;
+use Storage;
+use File;
 
 class ProductController extends Controller
 {
@@ -16,6 +18,15 @@ class ProductController extends Controller
         session()->forget('coupon_code');
         session()->forget('discounted_amount');
         $products = Product::all();
+
+        $path = public_path() . "/json/";
+
+        if (!is_dir($path)) {
+            mkdir($path, 0777, true);
+        }
+        File::put($path . 'product.json', json_encode($products));
+
+
         return view('admin.product.index', compact('products'));
     }
 

@@ -10,17 +10,17 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="text-white">My Orders</h4>
+                        <h4 class="text-white">Đơn hàng của tôi</h4>
                     </div>
                     <div class="card-body">
                         <table class="table table-bordered">
                             <thead>
                             <tr>
-                                <th>Order Date</th>
-                                <th>Tracking Number</th>
-                                <th>Total Price</th>
-                                <th>Status</th>
-                                <th>Action</th>
+                                <th>Ngày đặt hàng</th>
+                                <th>Mã vận chuyển</th>
+                                <th>Tổng tiền</th>
+                                <th>Trạng Thái</th>
+                                <th>Chi tiết đơn hàng</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -31,7 +31,7 @@
                                     <td>{{ $item->total_price }}</td>
                                     <td>{{ $item->status == '0' ? 'pending' : 'completed' }}</td>
                                     <td>
-                                        <a href="{{ url('view-order/'.$item->id) }}" class="btn btn-primary">View</a>
+                                        <a href="{{ url('view-order/'.$item->id) }}" class="btn btn-primary">Xem</a>
                                     </td>
                                 </tr>
                             @endforeach

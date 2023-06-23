@@ -10,21 +10,20 @@
                 <div class="card">
                     <div class="card-body">
                         @if($verified_purchase->count() > 0)
-                            <h5>You are writing a review for {{ $product->name }}</h5>
+                            <h5>Bạn đang viết đánh giá cho sản phẩm {{ $product->name }}</h5>
                             <form action="{{ url('/add-review') }}" method="POST">
                                 @csrf
                                 <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                <textarea class="form-control" name="user_review" rows="5" placeholder="Write a review"></textarea>
-                                <button type="submit" class="btn btn-primary mt-3">Submit Review</button>
+                                <textarea class="form-control" name="user_review" rows="5" placeholder="Đánh giá của bạn"></textarea>
+                                <button type="submit" class="btn btn-primary mt-3">Đánh giá</button>
                             </form>
                         @else
                             <div class="alert alert-danger">
-                                <h5>You are not eligible to review this product</h5>
+                                <h5>Bạn không đủ điều kiện để đánh giá</h5>
                                 <p>
-                                    For the trustworthiness of the reviews, only customers who purchased
-                                    the product can write a review about the product.
+                                    Chỉ khách hàng đã mua sản phẩm này mới có thể đánh giá. Mong quý khách thông cảm
                                 </p>
-                                <a href="{{ url('/') }}" class="btn btn-primary mt-3">Go to home page</a>
+                                <a href="{{ url('/') }}" class="btn btn-primary mt-3">Trở về trang chủ</a>
                             </div>
                         @endif
                     </div>

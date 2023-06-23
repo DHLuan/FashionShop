@@ -36,8 +36,8 @@
                                 <div class="form-group col-md-12 mb-3">
                                     <label for="exampleFormControlSelect1">Category</label>
                                     <select class="form-control" id="exampleFormControlSelect1" name="cate_id">
-                                        <option value="">Select a Category</option>
                                         <option value="">{{$products->category->name}}</option>
+                                        <option value="">{{$products->category->name}}</option>>
                                     </select>
                                 </div>
                                 <div class="form-group col-md-6 mb-3">

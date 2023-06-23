@@ -9,8 +9,8 @@
         <nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
             <div class="container d-flex align-items-center">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{('/')}}">Home</a></li>
-                    <li class="breadcrumb-item"><a href="{{('shop')}}">Shop</a></li>
+                    <li class="breadcrumb-item"><a href="{{('/')}}">Trang Chủ</a></li>
+                    <li class="breadcrumb-item"><a href="{{('shop')}}">Sản Phẩm</a></li>
                     <li class="breadcrumb-item active" aria-current="page">{{$products->name}}</li>
                 </ol>
             </div><!-- End .container -->
@@ -55,8 +55,8 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                            <button type="submit" class="btn btn-primary">Đánh giá</button>
                         </div>
                     </form>
                 </div>
@@ -91,15 +91,15 @@
                                     @endfor
                                     <span>
                                     @if($ratings->count() > 0)
-                                            <a class="ratings-text">({{$ratings->count()}} Ratings)</a>
+                                            <a class="ratings-text">({{$ratings->count()}} lượt đánh giá)</a>
                                         @else
-                                            No Rating
+                                            Chưa có đánh giá
                                         @endif
                             </span>
                                 </div><!-- End .rating-container -->
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                         data-bs-target="#exampleModal">
-                                    Rate this product
+                                    Đánh giá sản phẩm
                                 </button>
 
                                 <div class="details-filter-row details-row-size">
@@ -111,9 +111,9 @@
                                 </div><!-- End .product-price -->
 
                                 @if($products->qty >0)
-                                    <label class="badge bg-success">In stock</label>
+                                    <label class="badge bg-success">Còn hàng</label>
                                 @else
-                                    <label class="badge bg-danger">Out of stock</label>
+                                    <label class="badge bg-danger">Hết hàng</label>
                                 @endif
 
                                 <div class="product-content">
@@ -121,7 +121,7 @@
                                 </div><!-- End .product-content -->
                                 <div class="details-filter-row details-row-size">
                                     <input type="hidden" value="{{ $products->id }}" class="prod_id">
-                                    <label for="Quantity">Quantity</label>
+                                    <label for="Quantity">Số lượng</label>
                                     <div class="input-group text-center mb-3 mt-3 col-md-3">
                                         <button class="input-group-text decrement-btn">-</button>
                                         <input type="text" name="quantity " value="1"
@@ -134,33 +134,21 @@
                                 <div class="product-details-action">
                                     @if($products->qty >0)
                                         <a href="#"
-                                           class="btn-product btn-cart addToCartBtn"><span>add to cart</span></a>
+                                           class="btn-product btn-cart addToCartBtn"><span>Thêm vào giỏ hàng</span></a>
                                     @endif
                                     <div class="details-action-wrapper">
                                         <a href="#" class="btn-product btn-wishlist addToWishlist"
-                                           title="Wishlist"><span>Add to Wishlist</span></a>
+                                           title="Wishlist"><span>Thêm vào mong muốn</span></a>
                                         <a href="#" class="btn-product btn-compare"
-                                           title="Compare"><span>Add to Compare</span></a>
+                                           title="Compare"><span>So sánh</span></a>
                                     </div><!-- End .details-action-wrapper -->
                                 </div><!-- End .product-details-action -->
 
                                 <div class="product-details-footer">
                                     <div class="product-cat">
-                                        <span>Category:</span>
-                                        <a href="{{ $products->category->slug}}}">{{$products->category->name}}</a>,
+                                        <span>Danh Mục:</span>
+                                        <a href="{{ $products->category->slug}}}">{{$products->category->name}}</a>
                                     </div><!-- End .product-cat -->
-
-                                    <div class="social-icons social-icons-sm">
-                                        <span class="social-label">Share:</span>
-                                        <a href="#" class="social-icon" title="Facebook" target="_blank"><i
-                                                class="icon-facebook-f"></i></a>
-                                        <a href="#" class="social-icon" title="Twitter" target="_blank"><i
-                                                class="icon-twitter"></i></a>
-                                        <a href="#" class="social-icon" title="Instagram" target="_blank"><i
-                                                class="icon-instagram"></i></a>
-                                        <a href="#" class="social-icon" title="Pinterest" target="_blank"><i
-                                                class="icon-pinterest"></i></a>
-                                    </div>
                                 </div><!-- End .product-details-footer -->
                             </div><!-- End .product-details -->
                         </div><!-- End .col-md-6 -->
@@ -173,20 +161,20 @@
                     <ul class="nav nav-pills justify-content-center" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active" id="product-desc-link" data-toggle="tab" href="#product-desc-tab"
-                               role="tab" aria-controls="product-desc-tab" aria-selected="true">Description</a>
+                               role="tab" aria-controls="product-desc-tab" aria-selected="true">Mô tả</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" id="product-info-link" data-toggle="tab" href="#product-info-tab"
-                               role="tab" aria-controls="product-info-tab" aria-selected="false">information</a>
+                               role="tab" aria-controls="product-info-tab" aria-selected="false">Thông tin </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" id="product-shipping-link" data-toggle="tab"
                                href="#product-shipping-tab" role="tab" aria-controls="product-shipping-tab"
-                               aria-selected="false">Shipping & Returns</a>
+                               aria-selected="false">Vận chuyển</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" id="product-review-link" data-toggle="tab" href="#product-review-tab"
-                               role="tab" aria-controls="product-review-tab" aria-selected="false">Reviews
+                               role="tab" aria-controls="product-review-tab" aria-selected="false">Các đánh giá
                                 ({{$reviews->count()}})</a>
                         </li>
                     </ul>
@@ -211,7 +199,7 @@
                          aria-labelledby="product-info-link">
                         <div class="product-desc-content">
                             <div class="container">
-                                <h3>Information</h3>
+                                <h3>Thông tin sản phẩm</h3>
                                 <p>{{$products->meta_description}}</p>
                             </div><!-- End .container -->
                         </div><!-- End .product-desc-content -->
@@ -220,12 +208,9 @@
                          aria-labelledby="product-shipping-link">
                         <div class="product-desc-content">
                             <div class="container">
-                                <h3>Delivery & returns</h3>
-                                <p>We deliver to over 100 countries around the world. For full details of the delivery
-                                    options we offer, please view our <br>
-                                    We hope you’ll love every purchase, but if you ever need to return an item you can
-                                    do so within a month of receipt. For full details of how to make a return, please
-                                    view our </p>
+                                <h3>Vận chuyển</h3>
+                                <p>Của hàng chúng tôi vận chuyển đến khắp nơi. Để biết thêm thông tin chi tiết, xin hãy liên hệ với chúng tôi.
+                                Chúng tôi mong các bạn sẽ yêu thích và hài lòng khi mua sắm online tại cửa hàng của chúng tôi</p>
                             </div><!-- End .container -->
                         </div><!-- End .product-desc-content -->
                     </div><!-- .End .tab-pane -->
@@ -233,10 +218,10 @@
                          aria-labelledby="product-review-link">
                         <div class="reviews">
                             <div class="container">
-                                <h3>Reviews </h3>
+                                <h3>Các đánh giá về sản phẩm </h3>
                                 <a href="{{ url('add-review/'.$products->slug.'/userreview') }}"
                                    class="btn btn-primary ">
-                                    Write a review
+                                    Đánh giá sản phẩm
                                 </a>
                                 @foreach($reviews as $item)
                                     <div class="review">

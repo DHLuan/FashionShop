@@ -113,24 +113,44 @@
         <!--End of Tawk.to Script-->
 
         <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
-        <script>
-
-            var availableTags = [];
-            $.ajax({
-                method: "GET",
-                url: "/product-list",
-                success: function (response) {
-                    startAutoComplete(response);
-                }
-            });
-
-            function startAutoComplete(availableTags) {
-                $("#search_product").autocomplete({
-                    source: availableTags
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#timkiem').keyup(function () {
+                    $('#result').html('');
+                    var search = $('#timkiem').val();
+                    if (search != '') {
+                        var expression = new RegExp(search, "i");
+                        $.getJSON('/json/product.json', function (data) {
+                            //vòng lặp
+                            $.each(data, function (key, value) {
+                                if (value.name.search(expression) != -1) {
+                                    $('#result').css('display', 'block');
+                                    $('#result').append(
+                                        '<li style="cursor:pointer" class="list-group-item link-class">' +
+                                        '<div class="media">' +
+                                        '<div class="media-left">' +
+                                        '<img src="assets/uploads/products/' + value.image + '" class="media-object" alt="' + value.name + '" width="40" height="40">' +
+                                        '</div>' +
+                                        '<div class="media-body">' +
+                                        '<h4 class="media-heading">' + value.name + '</h4>' +
+                                        '<span class="text-muted" style="color:#cbd5e0;">Price: ' + value.selling_price + '</span>' +
+                                        '</div>' +
+                                        '</div>' +
+                                        '</li>'
+                                    );
+                                }
+                            });
+                        });
+                    } else {
+                        $('#result').css('display', 'none');
+                    }
+                })
+                $('#result').on('click', 'li', function () {
+                    var click_text = $(this).find('.media-heading').text();
+                    $('#timkiem').val($.trim(click_text));
+                    $('#result').empty().hide();
                 });
-            }
-
-
+            })
         </script>
 
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>

@@ -31,10 +31,11 @@ class FrontendController extends Controller
         // Clear the session values
         session()->forget('coupon_code');
         session()->forget('discounted_amount');
+        $categories = Category::whereNull('parent_id')->with('children')->get();
         $products = Product::all();
-        $categories = Category::where('popular','0')->get();
+        $category = Category::where('popular','0')->get();
 
-        return view('frontend.products.shop', compact('products','categories'));
+        return view('frontend.products.shop', compact('products','categories','category'));
     }
 
     public function category()
@@ -126,23 +127,14 @@ class FrontendController extends Controller
         // Clear the session values
         session()->forget('coupon_code');
         session()->forget('discounted_amount');
-        $searched_product = $request->product_name;
+        if (isset($_GET['search'])) {
+            $search = $_GET['search'];
+            $products = Product::where('name','LIKE','%'.$search.'%')->get();
+            $categories = Category::whereNull('parent_id')->with('children')->get();
+            return view('frontend.search', compact('products','search','categories'));
+        } else {
+            return redirect()->to('/');
+        }
 
-        if($searched_product != "")
-        {
-            $product = Product::where("name","LIKE","%$searched_product%")->first();
-            if($product)
-            {
-                return redirect('category/'.$product->category->slug.'/'.$product->slug);
-            }
-            else
-            {
-                return redirect()->back()->with("status","No products matches your search");
-            }
-        }
-        else
-        {
-            return redirect()->back();
-        }
     }
 }
